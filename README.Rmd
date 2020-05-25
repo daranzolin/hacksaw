@@ -1,0 +1,89 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+
+# hacksaw
+
+<!-- badges: start -->
+![](https://camo.githubusercontent.com/ea6e0ff99602c3563e3dd684abf60b30edceaeef/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f6c6966656379636c652d6578706572696d656e74616c2d6f72616e67652e737667)
+![CRAN log](http://www.r-pkg.org/badges/version/hacksaw)
+<!-- badges: end -->
+
+hacksaw is as an adhesive between various dplyr and purrr operations.
+
+## Installation
+
+You can install the released version of hacksaw from GitHub with:
+
+``` r
+remotes::install_github("daranzolin/hacksaw")
+```
+
+## Split operations
+
+### filter
+
+```{r warning=FALSE, message=FALSE}
+library(hacksaw)
+library(dplyr)
+
+iris %>% 
+  filter_split(Petal.Length > 5.1,
+               Sepal.Length > 6.4) %>% 
+  str()
+```
+
+### select
+
+```{r}
+iris %>% 
+  select_split(starts_with("Sepal"),
+               starts_with("Petal")) %>% 
+  str()
+```
+
+### distinct
+
+```{r}
+df <- tibble(
+  x = sample(10, 100, rep = TRUE),
+  y = sample(10, 100, rep = TRUE)
+)
+
+df %>% 
+  distinct_split(x, y) %>% 
+  str()
+```
+
+## Casting
+
+Tired of `mutate(... = as....(...))`? 
+
+```{r}
+starwars %>% cast_character(height, mass) %>% str(max.level = 2) 
+iris %>% cast_character(contains(".")) %>% str(max.level = 1)
+```
+
+hacksaw also includes `cast_numeric` and `cast_logical`.
+
+## Keeping NAs
+
+The reverse of `tidyr::drop_na`.
+
+```{r}
+df <- tibble(x = c(1, 2, NA, NA), y = c("a", NA, "b", NA))
+df %>% keep_na(x)
+df %>% keep_na(x, y)
+```
+

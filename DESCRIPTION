@@ -1,0 +1,18 @@
+Package: hacksaw
+Title: Extra Dplyr-Like Functionality
+Version: 0.0.0.9000
+Authors@R: 
+    person(given = "David",
+           family = "Ranzolin",
+           role = c("aut", "cre"),
+           email = "daranzolin@gmail.com")
+Description: What the package does (one paragraph).
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.0
+Imports: 
+    dplyr,
+    purrr,
+    rlang
