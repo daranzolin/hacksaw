@@ -39,8 +39,9 @@ library(hacksaw)
 library(dplyr)
 
 iris %>% 
-  filter_split(Petal.Length > 5.1,
-               Sepal.Length > 6.4) %>% 
+  filter_split(
+    large_petals = Petal.Length > 5.1,
+    large_sepals = Sepal.Length > 6.4) %>% 
   str()
 ```
 
