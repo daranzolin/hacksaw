@@ -61,10 +61,16 @@ df <- tibble(
   y = sample(10, 100, rep = TRUE)
 )
 
-df %>% 
-  distinct_split(x, y) %>% 
+starwars %>% 
+  distinct_split(skin_color, eye_color, homeworld) %>% 
+  str()
+
+iris %>% 
+  transmute_split(Sepal.Length * 2, Petal.Width + 5) %>% 
   str()
 ```
+
+
 
 ## Casting
 

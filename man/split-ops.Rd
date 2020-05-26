@@ -4,6 +4,7 @@
 \alias{filter_split}
 \alias{select_split}
 \alias{distinct_split}
+\alias{transmute_split}
 \title{Perform various operations before splitting}
 \usage{
 filter_split(.data, ...)
@@ -11,6 +12,8 @@ filter_split(.data, ...)
 select_split(.data, ...)
 
 distinct_split(.data, ...)
+
+transmute_split(.data, ...)
 }
 \arguments{
 \item{.data}{A data frame.}

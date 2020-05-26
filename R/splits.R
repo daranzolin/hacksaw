@@ -26,6 +26,13 @@ distinct_split <- function(.data, ...) {
   purrr::map(out, unlist)
 }
 
+#' @rdname split-ops
+#' @export
+transmute_split <- function(.data, ...) {
+  expr_list <- dots_to_expr(...)
+  purrr::map(expr_list[[1]], function(expr) dplyr::transmute(.data, !!expr))
+}
+
 dots_to_expr <- function(...) {
   exprs <- rlang::enquos(...)
   list(exprs)
