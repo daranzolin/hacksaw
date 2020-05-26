@@ -65,11 +65,6 @@ iris %>%
 ### distinct
 
 ``` r
-df <- tibble(
-  x = sample(10, 100, rep = TRUE),
-  y = sample(10, 100, rep = TRUE)
-)
-
 starwars %>% 
   distinct_split(skin_color, eye_color, homeworld) %>% 
   str()
@@ -80,7 +75,11 @@ starwars %>%
 #>   ..- attr(*, "names")= chr [1:15] "eye_color1" "eye_color2" "eye_color3" "eye_color4" ...
 #>  $ : Named chr [1:49] "Tatooine" "Naboo" "Alderaan" "Stewjon" ...
 #>   ..- attr(*, "names")= chr [1:49] "homeworld1" "homeworld2" "homeworld3" "homeworld4" ...
+```
 
+### transmute
+
+``` r
 iris %>% 
   transmute_split(Sepal.Length * 2, Petal.Width + 5) %>% 
   str()

@@ -56,15 +56,14 @@ iris %>%
 ### distinct
 
 ```{r}
-df <- tibble(
-  x = sample(10, 100, rep = TRUE),
-  y = sample(10, 100, rep = TRUE)
-)
-
 starwars %>% 
   distinct_split(skin_color, eye_color, homeworld) %>% 
   str()
+```
 
+### transmute 
+
+```{r}
 iris %>% 
   transmute_split(Sepal.Length * 2, Petal.Width + 5) %>% 
   str()
