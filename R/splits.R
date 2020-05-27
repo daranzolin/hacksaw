@@ -7,33 +7,37 @@
 #' @rdname split-ops
 #' @export
 filter_split <- function(.data, ...) {
-  expr_list <- dots_to_expr(...)
-  purrr::map(expr_list[[1]], function(expr) dplyr::filter(.data, !!expr))
+  iterate_expressions(.data, "filter", ...)
 }
 
 #' @rdname split-ops
 #' @export
 select_split <- function(.data, ...) {
-  expr_list <- dots_to_expr(...)
-  purrr::map(expr_list[[1]], function(expr) dplyr::select(.data, !!expr))
+  iterate_expressions(.data, "select", ...)
 }
 
 #' @rdname split-ops
 #' @export
 distinct_split <- function(.data, ...) {
-  expr_list <- dots_to_expr(...)
-  out <- purrr::map(expr_list[[1]], function(expr) dplyr::distinct(.data, !!expr))
+  out <- iterate_expressions(.data, "distinct", ...)
   purrr::map(out, unlist)
 }
 
 #' @rdname split-ops
 #' @export
 transmute_split <- function(.data, ...) {
-  expr_list <- dots_to_expr(...)
-  purrr::map(expr_list[[1]], function(expr) dplyr::transmute(.data, !!expr))
+  iterate_expressions(.data, "transmute", ...)
 }
 
-dots_to_expr <- function(...) {
+#' @rdname split-ops
+#' @export
+slice_split <- function(.data, ...) {
+  iterate_expressions(.data, "slice", ...)
+}
+
+iterate_expressions <- function(.data, verb, ...) {
   exprs <- rlang::enquos(...)
-  list(exprs)
+  expr_list <- list(exprs)
+  f <- utils::getFromNamespace(verb, "dplyr")
+  purrr::map(expr_list[[1]], function(expr) f(.data, !!expr))
 }

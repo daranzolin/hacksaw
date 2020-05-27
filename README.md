@@ -91,6 +91,33 @@ iris %>%
 #>   ..$ Petal.Width + 5: num [1:150] 5.2 5.2 5.2 5.2 5.2 5.4 5.3 5.2 5.2 5.1 ...
 ```
 
+### slice
+
+``` r
+iris %>% 
+  slice_split(1:10, 11:15, 30:50) %>% 
+  str()
+#> List of 3
+#>  $ :'data.frame':    10 obs. of  5 variables:
+#>   ..$ Sepal.Length: num [1:10] 5.1 4.9 4.7 4.6 5 5.4 4.6 5 4.4 4.9
+#>   ..$ Sepal.Width : num [1:10] 3.5 3 3.2 3.1 3.6 3.9 3.4 3.4 2.9 3.1
+#>   ..$ Petal.Length: num [1:10] 1.4 1.4 1.3 1.5 1.4 1.7 1.4 1.5 1.4 1.5
+#>   ..$ Petal.Width : num [1:10] 0.2 0.2 0.2 0.2 0.2 0.4 0.3 0.2 0.2 0.1
+#>   ..$ Species     : Factor w/ 3 levels "setosa","versicolor",..: 1 1 1 1 1 1 1 1 1 1
+#>  $ :'data.frame':    5 obs. of  5 variables:
+#>   ..$ Sepal.Length: num [1:5] 5.4 4.8 4.8 4.3 5.8
+#>   ..$ Sepal.Width : num [1:5] 3.7 3.4 3 3 4
+#>   ..$ Petal.Length: num [1:5] 1.5 1.6 1.4 1.1 1.2
+#>   ..$ Petal.Width : num [1:5] 0.2 0.2 0.1 0.1 0.2
+#>   ..$ Species     : Factor w/ 3 levels "setosa","versicolor",..: 1 1 1 1 1
+#>  $ :'data.frame':    21 obs. of  5 variables:
+#>   ..$ Sepal.Length: num [1:21] 4.7 4.8 5.4 5.2 5.5 4.9 5 5.5 4.9 4.4 ...
+#>   ..$ Sepal.Width : num [1:21] 3.2 3.1 3.4 4.1 4.2 3.1 3.2 3.5 3.6 3 ...
+#>   ..$ Petal.Length: num [1:21] 1.6 1.6 1.5 1.5 1.4 1.5 1.2 1.3 1.4 1.3 ...
+#>   ..$ Petal.Width : num [1:21] 0.2 0.2 0.4 0.1 0.2 0.2 0.2 0.2 0.1 0.2 ...
+#>   ..$ Species     : Factor w/ 3 levels "setosa","versicolor",..: 1 1 1 1 1 1 1 1 1 1 ...
+```
+
 ## Casting
 
 Tired of `mutate(... = as....(...))`?

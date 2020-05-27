@@ -16,4 +16,4 @@ Imports:
     dplyr,
     purrr,
     rlang,
-    tibble
+    utils

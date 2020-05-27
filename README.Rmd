@@ -70,6 +70,16 @@ iris %>%
   str()
 ```
 
+
+### slice
+
+```{r}
+iris %>% 
+  slice_split(1:10, 11:15, 30:50) %>% 
+  str()
+```
+
+
 ## Casting
 
 Tired of `mutate(... = as....(...))`? 
