@@ -15,4 +15,5 @@ RoxygenNote: 7.1.0
 Imports: 
     dplyr,
     purrr,
-    rlang
+    rlang,
+    tibble

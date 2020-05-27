@@ -97,7 +97,7 @@ Tired of `mutate(... = as....(...))`?
 
 ``` r
 starwars %>% cast_character(height, mass) %>% str(max.level = 2) 
-#> tibble [87 × 13] (S3: tbl_df/tbl/data.frame)
+#> tibble [87 × 14] (S3: tbl_df/tbl/data.frame)
 #>  $ name      : chr [1:87] "Luke Skywalker" "C-3PO" "R2-D2" "Darth Vader" ...
 #>  $ height    : chr [1:87] "172" "167" "96" "202" ...
 #>  $ mass      : chr [1:87] "77" "75" "32" "136" ...
@@ -105,7 +105,8 @@ starwars %>% cast_character(height, mass) %>% str(max.level = 2)
 #>  $ skin_color: chr [1:87] "fair" "gold" "white, blue" "white" ...
 #>  $ eye_color : chr [1:87] "blue" "yellow" "red" "yellow" ...
 #>  $ birth_year: num [1:87] 19 112 33 41.9 19 52 47 NA 24 57 ...
-#>  $ gender    : chr [1:87] "male" NA NA "male" ...
+#>  $ sex       : chr [1:87] "male" "none" "none" "male" ...
+#>  $ gender    : chr [1:87] "masculine" "masculine" "masculine" "masculine" ...
 #>  $ homeworld : chr [1:87] "Tatooine" "Tatooine" "Naboo" "Tatooine" ...
 #>  $ species   : chr [1:87] "Human" "Droid" "Droid" "Human" ...
 #>  $ films     :List of 87
@@ -139,4 +140,45 @@ df %>% keep_na(x, y)
 #>       x y    
 #>   <dbl> <chr>
 #> 1    NA <NA>
+```
+
+## Shifting row values
+
+Shift values across rows in either direction
+
+``` r
+df <- data.frame(
+  s = c(NA, 1, NA, NA),
+  t = c(NA, NA, 1, NA),
+  u = c(NA, NA, 2, 5),
+  v = c(5, 1, 9, 2),
+  x = c(1, 5, 6, 7),
+  y = c(NA, NA, 8, NA),
+  z = 1:4
+)
+df
+#>    s  t  u v x  y z
+#> 1 NA NA NA 5 1 NA 1
+#> 2  1 NA NA 1 5 NA 2
+#> 3 NA  1  2 9 6  8 3
+#> 4 NA NA  5 2 7 NA 4
+
+shift_row_values(df)
+#>   s t u  v  x  y  z
+#> 1 5 1 1 NA NA NA NA
+#> 2 1 1 5  2 NA NA NA
+#> 3 1 2 9  6  8  3 NA
+#> 4 5 2 7  4 NA NA NA
+shift_row_values(df, at = 1:3)
+#>    s  t u  v  x  y  z
+#> 1  5  1 1 NA NA NA NA
+#> 2  1  1 5  2 NA NA NA
+#> 3  1  2 9  6  8  3 NA
+#> 4 NA NA 5  2  7 NA  4
+shift_row_values(df, at = 1:2, .dir = "right")
+#>    s  t  u  v x  y z
+#> 1 NA NA NA NA 5  1 1
+#> 2 NA NA NA  1 1  5 2
+#> 3 NA  1  2  9 6  8 3
+#> 4 NA NA  5  2 7 NA 4
 ```
