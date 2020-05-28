@@ -20,7 +20,7 @@ knitr::opts_chunk$set(
 ![CRAN log](http://www.r-pkg.org/badges/version/hacksaw)
 <!-- badges: end -->
 
-hacksaw is as an adhesive between various dplyr and purrr operations.
+hacksaw is as an adhesive between various dplyr and purrr operations, with some extra tidyverse-like functionality (e.g. keeping NAs, shifting row values, casting, etc.)
 
 ## Installation
 
@@ -96,7 +96,8 @@ hacksaw also includes `cast_numeric` and `cast_logical`.
 The reverse of `tidyr::drop_na`.
 
 ```{r}
-df <- tibble(x = c(1, 2, NA, NA), y = c("a", NA, "b", NA))
+df <- tibble(x = c(1, 2, NA, NA, NA), y = c("a", NA, "b", NA, NA))
+df %>% keep_na()
 df %>% keep_na(x)
 df %>% keep_na(x, y)
 ```

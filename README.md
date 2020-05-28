@@ -9,7 +9,9 @@
 ![CRAN log](http://www.r-pkg.org/badges/version/hacksaw)
 <!-- badges: end -->
 
-hacksaw is as an adhesive between various dplyr and purrr operations.
+hacksaw is as an adhesive between various dplyr and purrr operations,
+with some extra tidyverse-like functionality (e.g. keeping NAs, shifting
+row values, casting, etc.)
 
 ## Installation
 
@@ -85,10 +87,10 @@ iris %>%
   transmute_split(Sepal.Length * 2, Petal.Width + 5) %>% 
   str()
 #> List of 2
-#>  $ :'data.frame':    150 obs. of  1 variable:
-#>   ..$ Sepal.Length * 2: num [1:150] 10.2 9.8 9.4 9.2 10 10.8 9.2 10 8.8 9.8 ...
-#>  $ :'data.frame':    150 obs. of  1 variable:
-#>   ..$ Petal.Width + 5: num [1:150] 5.2 5.2 5.2 5.2 5.2 5.4 5.3 5.2 5.2 5.1 ...
+#>  $ : Named num [1:150] 10.2 9.8 9.4 9.2 10 10.8 9.2 10 8.8 9.8 ...
+#>   ..- attr(*, "names")= chr [1:150] "Sepal.Length * 21" "Sepal.Length * 22" "Sepal.Length * 23" "Sepal.Length * 24" ...
+#>  $ : Named num [1:150] 5.2 5.2 5.2 5.2 5.2 5.4 5.3 5.2 5.2 5.1 ...
+#>   ..- attr(*, "names")= chr [1:150] "Petal.Width + 51" "Petal.Width + 52" "Petal.Width + 53" "Petal.Width + 54" ...
 ```
 
 ### slice
@@ -155,18 +157,26 @@ hacksaw also includes `cast_numeric` and `cast_logical`.
 The reverse of `tidyr::drop_na`.
 
 ``` r
-df <- tibble(x = c(1, 2, NA, NA), y = c("a", NA, "b", NA))
-df %>% keep_na(x)
+df <- tibble(x = c(1, 2, NA, NA, NA), y = c("a", NA, "b", NA, NA))
+df %>% keep_na()
 #> # A tibble: 2 x 2
 #>       x y    
 #>   <dbl> <chr>
-#> 1    NA b    
+#> 1    NA <NA> 
 #> 2    NA <NA>
-df %>% keep_na(x, y)
-#> # A tibble: 1 x 2
+df %>% keep_na(x)
+#> # A tibble: 3 x 2
 #>       x y    
 #>   <dbl> <chr>
-#> 1    NA <NA>
+#> 1    NA b    
+#> 2    NA <NA> 
+#> 3    NA <NA>
+df %>% keep_na(x, y)
+#> # A tibble: 2 x 2
+#>       x y    
+#>   <dbl> <chr>
+#> 1    NA <NA> 
+#> 2    NA <NA>
 ```
 
 ## Shifting row values
