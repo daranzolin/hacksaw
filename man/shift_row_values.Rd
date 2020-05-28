@@ -4,10 +4,10 @@
 \alias{shift_row_values}
 \title{Shift row values left or right}
 \usage{
-shift_row_values(data, .dir = "left", at = NULL)
+shift_row_values(.data, .dir = "left", at = NULL)
 }
 \arguments{
-\item{data}{a table of data.}
+\item{.data}{a table of data.}
 
 \item{.dir}{the shift direction as a string, one of "left" or "right"}
 

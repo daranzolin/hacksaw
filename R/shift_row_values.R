@@ -1,16 +1,23 @@
 #' Shift row values left or right
 #'
-#' @param data a table of data.
+#' @param .data a table of data.
 #' @param .dir the shift direction as a string, one of "left" or "right"
 #' @param at the row indices at which to shift
 #'
 #' @return a tibble
 #' @export
-shift_row_values <- function(data, .dir = "left", at = NULL) {
-  nc <- ncol(data)
-  nm <- names(data)
-  if (is.null(at)) at <- 1:nrow(data)
-  rts <- data[at,]
+shift_row_values <- function(.data, .dir = "left", at = NULL) {
+
+  out <- assert_df(.data)
+
+  if (!.dir %in% c("right", "left")) {
+    stop("'.dir' must be either 'left' or 'right'", call. = FALSE)
+  }
+
+  nc <- ncol(out)
+  nm <- names(out)
+  if (is.null(at)) at <- 1:nrow(out)
+  rts <- out[at,]
   rws <- split(rts, seq_len(nrow(rts)))
   vl <- lapply(rws, function(x) {
     vals <- x[!is.na(x)]
@@ -24,9 +31,7 @@ shift_row_values <- function(data, .dir = "left", at = NULL) {
   rsh <- as.data.frame(do.call(rbind, vl))
   names(rsh) <- nm
 
-  if (max(at) == nrow(data)) {
-    return(rsh)
-  }
-  data[at,] <- rsh
-  data
+  out[at,] <- rsh
+  if (inherits(.data, "tbl")) out <- tibble::as_tibble(out)
+  out
 }

@@ -9,7 +9,7 @@ keep_na(.data, ...)
 \arguments{
 \item{.data}{A data frame.}
 
-\item{...}{A selection of columns.}
+\item{...}{A selection of columns. If empty, all columns are selected.}
 }
 \description{
 Keep rows containing missing values
