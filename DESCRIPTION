@@ -1,12 +1,14 @@
 Package: hacksaw
-Title: Extra Dplyr-Like Functionality
-Version: 0.0.0.9000
+Title: Extra Tidyverse 
+Version: 0.0.1
 Authors@R: 
     person(given = "David",
            family = "Ranzolin",
            role = c("aut", "cre"),
            email = "daranzolin@gmail.com")
-Description: Split data frames in more precise way. Cast variables quicker. Keep NAs.
+Description: Move between 'dplyr' and 'purrr' more efficiently with precision 
+  splitting of data frames. Cast variables to different data types. 
+  Keep NAs. Shift row values.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
