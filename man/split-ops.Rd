@@ -12,9 +12,9 @@ filter_split(.data, ...)
 
 select_split(.data, ...)
 
-distinct_split(.data, ...)
+distinct_split(.data, ..., simplify = TRUE)
 
-transmute_split(.data, ...)
+transmute_split(.data, ..., simplify = TRUE)
 
 slice_split(.data, ...)
 }
@@ -22,6 +22,8 @@ slice_split(.data, ...)
 \item{.data}{A data frame.}
 
 \item{...}{Expressions to be evaluated.}
+
+\item{simplify}{Boolean, whether to unlist the returned split.}
 }
 \description{
 Perform various operations before splitting

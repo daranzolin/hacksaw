@@ -1,6 +1,7 @@
 #' Perform various operations before splitting
 #'
 #' @param .data A data frame.
+#' @param simplify Boolean, whether to unlist the returned split.
 #' @param ... Expressions to be evaluated.
 #'
 #' @export
@@ -18,15 +19,22 @@ select_split <- function(.data, ...) {
 
 #' @rdname split-ops
 #' @export
-distinct_split <- function(.data, ...) {
+distinct_split <- function(.data, ..., simplify = TRUE) {
   out <- iterate_expressions(.data, "distinct", ...)
-  purrr::map(out, unlist)
+  if (simplify) {
+    return(purrr::map(out, unlist))
+  }
+  out
 }
 
 #' @rdname split-ops
 #' @export
-transmute_split <- function(.data, ...) {
-  iterate_expressions(.data, "transmute", ...)
+transmute_split <- function(.data, ..., simplify = TRUE) {
+  out <- iterate_expressions(.data, "transmute", ...)
+  if (simplify) {
+    return(purrr::map(out, unlist))
+  }
+  out
 }
 
 #' @rdname split-ops
