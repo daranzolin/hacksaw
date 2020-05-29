@@ -3,6 +3,7 @@
 \name{filter_split}
 \alias{filter_split}
 \alias{select_split}
+\alias{mutate_split}
 \alias{distinct_split}
 \alias{transmute_split}
 \alias{slice_split}
@@ -11,6 +12,8 @@
 filter_split(.data, ...)
 
 select_split(.data, ...)
+
+mutate_split(.data, ...)
 
 distinct_split(.data, ..., simplify = TRUE)
 

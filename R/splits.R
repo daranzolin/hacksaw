@@ -19,6 +19,18 @@ select_split <- function(.data, ...) {
 
 #' @rdname split-ops
 #' @export
+mutate_split <- function(.data, ...) {
+  q <- rlang::enquos(...)
+  out <- purrr::map2(q, names(q),
+                     ~dplyr::mutate(.data,
+                                    !!.y := !!rlang::parse_quo(rlang::quo_name(.x),
+                                                               env = rlang::caller_env())))
+  names(out) <- NULL
+  out
+}
+
+#' @rdname split-ops
+#' @export
 distinct_split <- function(.data, ..., simplify = TRUE) {
   out <- iterate_expressions(.data, "distinct", ...)
   if (simplify) {

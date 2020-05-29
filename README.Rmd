@@ -62,6 +62,15 @@ starwars %>%
   str()
 ```
 
+### mutate
+
+```{r}
+iris %>% 
+  mutate_split(Sepal.Length2 = Sepal.Length * 2,
+               Sepal.Length3 = Sepal.Length * 3) %>% 
+  str()
+```
+
 ### transmute 
 
 ```{r}
