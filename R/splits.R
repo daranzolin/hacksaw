@@ -34,7 +34,10 @@ mutate_split <- function(.data, ...) {
 distinct_split <- function(.data, ..., simplify = TRUE) {
   out <- iterate_expressions(.data, "distinct", ...)
   if (simplify) {
-    return(purrr::map(out, unlist))
+    nm <- purrr::map_chr(out, names)
+    out <- purrr::map(out, unlist)
+    names(out) <- nm
+    return(out)
   }
   out
 }
