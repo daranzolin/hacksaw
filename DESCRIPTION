@@ -20,7 +20,9 @@ Imports:
     rlang,
     utils,
     tidyselect,
-    tibble
+    tibble,
+    zeallot,
+    magrittr
 Suggests: 
     testthat,
     knitr,
