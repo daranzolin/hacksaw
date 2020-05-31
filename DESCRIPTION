@@ -1,14 +1,14 @@
 Package: hacksaw
-Title: Extra Tidyverse Functionality
+Title: Additional Tools for Splitting and Cleaning Data
 Version: 0.0.1
 Authors@R: 
     person(given = "David",
            family = "Ranzolin",
            role = c("aut", "cre"),
            email = "daranzolin@gmail.com")
-Description: Move between 'dplyr' and 'purrr' more efficiently with precision 
-  splitting of data frames. Cast variables to different data types. Keep NAs. 
-  Shift row values.
+Description: Move between dplyr and purrr more efficiently with precision 
+  splitting of data frames. Easily cast variables to different data types. Keep 
+  rows with NAs. Shift row values left or right.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
