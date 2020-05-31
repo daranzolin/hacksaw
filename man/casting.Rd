@@ -4,7 +4,7 @@
 \alias{cast_character}
 \alias{cast_numeric}
 \alias{cast_logical}
-\title{Casting functions}
+\title{Cast columns to a specified data type}
 \usage{
 cast_character(data, ...)
 
@@ -15,8 +15,15 @@ cast_logical(data, ...)
 \arguments{
 \item{data}{a table of data}
 
-\item{...}{columns}
+\item{...}{A selection of columns}
 }
 \description{
-Casting functions
+Cast columns to a specified data type
+}
+\examples{
+library(dplyr)
+df <- tibble(x = 1:3, y = as.character(1:3), z = c(0, 0, 1))
+df \%>\% cast_character(x)
+df \%>\% cast_numeric(y)
+df \%>\% cast_logical(z)
 }

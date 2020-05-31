@@ -14,3 +14,12 @@ keep_na(.data, ...)
 \description{
 Keep rows containing missing values
 }
+\examples{
+library(dplyr)
+df <- tibble(x = c(1, 2, NA, NA), y = c("a", NA, "b", NA))
+df \%>\% keep_na()
+df \%>\% keep_na(x)
+
+vars <- "y"
+df \%>\% keep_na(x, any_of(vars))
+}

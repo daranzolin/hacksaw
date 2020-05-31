@@ -89,6 +89,16 @@ iris %>%
   str()
 ```
 
+Use the `var_max` and `var_min` helpers to easily get minimum and maximum values of a variable:
+
+```{r}
+iris %>% 
+  slice_split(
+    largest_sepals = var_max(Sepal.Length, 4),
+    smallest_sepals = var_min(Sepal.Length, 4)
+  )
+```
+
 
 ## Casting
 

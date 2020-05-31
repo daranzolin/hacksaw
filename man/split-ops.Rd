@@ -29,5 +29,5 @@ slice_split(.data, ...)
 \item{simplify}{Boolean, whether to unlist the returned split.}
 }
 \description{
-Perform various operations before splitting
+Learn more in \code{vignette("hacksaw-splitting")}.
 }

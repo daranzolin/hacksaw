@@ -22,4 +22,10 @@ Imports:
     tidyselect,
     tibble
 Suggests: 
-    testthat
+    testthat,
+    knitr,
+    rmarkdown,
+    ggplot2,
+    patchwork,
+    tidyr
+VignetteBuilder: knitr

@@ -145,6 +145,30 @@ iris %>%
 #>   ..$ Species     : Factor w/ 3 levels "setosa","versicolor",..: 1 1 1 1 1 1 1 1 1 1 ...
 ```
 
+Use the `var_max` and `var_min` helpers to easily get minimum and
+maximum values of a variable:
+
+``` r
+iris %>% 
+  slice_split(
+    largest_sepals = var_max(Sepal.Length, 4),
+    smallest_sepals = var_min(Sepal.Length, 4)
+  )
+#> $largest_sepals
+#>   Sepal.Length Sepal.Width Petal.Length Petal.Width   Species
+#> 1          7.7         3.8          6.7         2.2 virginica
+#> 2          7.7         2.6          6.9         2.3 virginica
+#> 3          7.7         2.8          6.7         2.0 virginica
+#> 4          7.9         3.8          6.4         2.0 virginica
+#> 
+#> $smallest_sepals
+#>   Sepal.Length Sepal.Width Petal.Length Petal.Width Species
+#> 1          4.4         2.9          1.4         0.2  setosa
+#> 2          4.3         3.0          1.1         0.1  setosa
+#> 3          4.4         3.0          1.3         0.2  setosa
+#> 4          4.4         3.2          1.3         0.2  setosa
+```
+
 ## Casting
 
 Tired of `mutate(... = as....(...))`?

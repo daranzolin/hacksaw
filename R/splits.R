@@ -1,5 +1,7 @@
 #' Perform various operations before splitting
 #'
+#' Learn more in `vignette("hacksaw-splitting")`.
+#'
 #' @param .data A data frame.
 #' @param simplify Boolean, whether to unlist the returned split.
 #' @param ... Expressions to be evaluated.
@@ -58,9 +60,34 @@ slice_split <- function(.data, ...) {
   iterate_expressions(.data, "slice", ...)
 }
 
+#' Return the indices of n max values of a variable
+#'
+#' @param var the variable to use.
+#' @param n number of rows to return.
+#'
+#' @export
+var_max <- function(var, n = 6) {
+  pf <- parent.frame()
+  vals <- utils::tail(sort(var), n)
+  eval(expr = which(var %in% vals)[1:n], envir = pf)
+}
+
+#' Return the indices of n min values of a variable
+#'
+#' @param var the variable to use.
+#' @param n number of rows to return.
+#'
+#' @export
+var_min <- function(var, n = 6) {
+  pf <- parent.frame()
+  vals <- utils::head(sort(var), n)
+  eval(expr = which(var %in% vals)[1:n], envir = pf)
+}
+
 iterate_expressions <- function(.data, verb, ...) {
   exprs <- rlang::enquos(...)
   expr_list <- list(exprs)
   f <- utils::getFromNamespace(verb, "dplyr")
   purrr::map(expr_list[[1]], function(expr) f(.data, !!expr))
 }
+
