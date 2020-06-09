@@ -21,7 +21,7 @@ knitr::opts_chunk$set(
 [![Travis build status](https://travis-ci.org/daranzolin/hacksaw.svg?branch=master)](https://travis-ci.com/daranzolin/hacksaw)
 <!-- badges: end -->
 
-hacksaw is as an adhesive between various dplyr and purrr operations, with some extra tidyverse-like functionality (e.g. keeping NAs, shifting row values, casting, etc.)
+hacksaw is as an adhesive between various dplyr and purrr operations, with some extra tidyverse-like functionality (e.g. keeping NAs, shifting row values) and shortcuts (filter/keep/discard + grepl, mutate(var = as.*(var))).
 
 ## Installation
 

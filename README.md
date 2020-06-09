@@ -12,7 +12,8 @@ status](https://travis-ci.org/daranzolin/hacksaw.svg?branch=master)](https://tra
 
 hacksaw is as an adhesive between various dplyr and purrr operations,
 with some extra tidyverse-like functionality (e.g. keeping NAs, shifting
-row values, casting, etc.)
+row values) and shortcuts (filter/keep/discard + grepl, mutate(var =
+as.\*(var))).
 
 ## Installation
 
