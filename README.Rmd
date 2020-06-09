@@ -144,3 +144,13 @@ shift_row_values(df, at = 1:2, .dir = "right")
 
 ```
 
+## Filtering, keeping, and discarding patterns
+
+```{r}
+starwars %>% 
+  filter_pattern(homeworld, "oo") %>% 
+  distinct(homeworld)
+```
+
+Use `keep_pattern` and `discard_pattern` for lists and vectors.
+

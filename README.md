@@ -268,3 +268,18 @@ shift_row_values(df, at = 1:2, .dir = "right")
 #> 3 NA  1  2  9 6  8 3
 #> 4 NA NA  5  2 7 NA 4
 ```
+
+## Filtering, keeping, and discarding patterns
+
+``` r
+starwars %>% 
+  filter_pattern(homeworld, "oo") %>% 
+  distinct(homeworld)
+#> # A tibble: 2 x 1
+#>   homeworld
+#>   <chr>    
+#> 1 Tatooine 
+#> 2 Naboo
+```
+
+Use `keep_pattern` and `discard_pattern` for lists and vectors.
