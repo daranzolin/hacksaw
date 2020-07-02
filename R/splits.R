@@ -35,12 +35,7 @@ mutate_split <- function(.data, ...) {
 #' @export
 distinct_split <- function(.data, ..., simplify = TRUE) {
   out <- iterate_expressions(.data, "distinct", ...)
-  if (simplify) {
-    nm <- purrr::map_chr(out, names)
-    out <- purrr::map(out, unlist)
-    names(out) <- nm
-    return(out)
-  }
+  if (simplify) return(purrr::map(out, unlist, use.names = FALSE))
   out
 }
 
@@ -48,9 +43,7 @@ distinct_split <- function(.data, ..., simplify = TRUE) {
 #' @export
 transmute_split <- function(.data, ..., simplify = TRUE) {
   out <- iterate_expressions(.data, "transmute", ...)
-  if (simplify) {
-    return(purrr::map(out, unlist))
-  }
+  if (simplify) return(purrr::map(out, unlist, use.names = FALSE))
   out
 }
 
@@ -58,6 +51,24 @@ transmute_split <- function(.data, ..., simplify = TRUE) {
 #' @export
 slice_split <- function(.data, ...) {
   iterate_expressions(.data, "slice", ...)
+}
+
+#' @rdname split-ops
+#' @export
+pull_split <- function(.data, ...) {
+  iterate_expressions(.data, "pull", ...)
+}
+
+#' @rdname split-ops
+#' @export
+eval_split <- function(.data, ...) {
+  exprs <- rlang::enquos(...)
+  out <- purrr::map(exprs, ~{
+    rlang::quo(.data %>% !!.x) %>%
+      rlang::quo_squash() %>%
+      rlang::eval_tidy()
+  })
+  out
 }
 
 #' Return the indices of n max values of a variable
@@ -90,4 +101,5 @@ iterate_expressions <- function(.data, verb, ...) {
   f <- utils::getFromNamespace(verb, "dplyr")
   purrr::map(expr_list[[1]], function(expr) f(.data, !!expr))
 }
+
 

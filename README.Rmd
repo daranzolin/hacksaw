@@ -80,7 +80,6 @@ iris %>%
   str()
 ```
 
-
 ### slice
 
 ```{r}
@@ -99,6 +98,19 @@ iris %>%
   )
 ```
 
+## eval_split
+
+Evaluate any expression:
+
+```{r}
+mtcars %>% 
+  eval_split(
+    select(hp, mpg),
+    filter(mpg > 25),
+    mutate(pounds = wt*1000)
+  ) %>% 
+  str()
+```
 
 ## Casting
 

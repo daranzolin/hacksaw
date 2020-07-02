@@ -7,6 +7,8 @@
 \alias{distinct_split}
 \alias{transmute_split}
 \alias{slice_split}
+\alias{pull_split}
+\alias{eval_split}
 \title{Perform various operations before splitting}
 \usage{
 filter_split(.data, ...)
@@ -20,6 +22,10 @@ distinct_split(.data, ..., simplify = TRUE)
 transmute_split(.data, ..., simplify = TRUE)
 
 slice_split(.data, ...)
+
+pull_split(.data, ...)
+
+eval_split(.data, ...)
 }
 \arguments{
 \item{.data}{A data frame.}
