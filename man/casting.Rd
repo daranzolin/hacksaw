@@ -17,6 +17,9 @@ cast_logical(.data, ...)
 
 \item{...}{A selection of columns}
 }
+\value{
+a data frame.
+}
 \description{
 Cast columns to a specified data type
 }
