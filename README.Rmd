@@ -33,12 +33,21 @@ remotes::install_github("daranzolin/hacksaw")
 
 ## Split operations
 
-### filter
+### precision_split
 
-```{r warning=FALSE, message=FALSE}
+```{r}
 library(hacksaw)
 library(dplyr)
 
+mtcars %>% 
+  precision_split(mpg > 20) %>% 
+  str()
+```
+
+
+### filter
+
+```{r warning=FALSE, message=FALSE}
 iris %>% 
   filter_split(
     large_petals = Petal.Length > 5.1,
@@ -181,5 +190,4 @@ df %>%
   group_by(id) %>%
   mutate(year_first_tested = pluck_when(year, tested == "yes"))
 ```
-
 

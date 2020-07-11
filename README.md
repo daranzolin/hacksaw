@@ -25,12 +25,53 @@ remotes::install_github("daranzolin/hacksaw")
 
 ## Split operations
 
-### filter
+### precision\_split
 
 ``` r
 library(hacksaw)
 library(dplyr)
+#> 
+#> Attaching package: 'dplyr'
+#> The following objects are masked from 'package:stats':
+#> 
+#>     filter, lag
+#> The following objects are masked from 'package:base':
+#> 
+#>     intersect, setdiff, setequal, union
 
+mtcars %>% 
+  precision_split(mpg > 20) %>% 
+  str()
+#> List of 2
+#>  $ FALSE:'data.frame':   18 obs. of  11 variables:
+#>   ..$ mpg : num [1:18] 18.7 18.1 14.3 19.2 17.8 16.4 17.3 15.2 10.4 10.4 ...
+#>   ..$ cyl : num [1:18] 8 6 8 6 6 8 8 8 8 8 ...
+#>   ..$ disp: num [1:18] 360 225 360 168 168 ...
+#>   ..$ hp  : num [1:18] 175 105 245 123 123 180 180 180 205 215 ...
+#>   ..$ drat: num [1:18] 3.15 2.76 3.21 3.92 3.92 3.07 3.07 3.07 2.93 3 ...
+#>   ..$ wt  : num [1:18] 3.44 3.46 3.57 3.44 3.44 ...
+#>   ..$ qsec: num [1:18] 17 20.2 15.8 18.3 18.9 ...
+#>   ..$ vs  : num [1:18] 0 1 0 1 1 0 0 0 0 0 ...
+#>   ..$ am  : num [1:18] 0 0 0 0 0 0 0 0 0 0 ...
+#>   ..$ gear: num [1:18] 3 3 3 4 4 3 3 3 3 3 ...
+#>   ..$ carb: num [1:18] 2 1 4 4 4 3 3 3 4 4 ...
+#>  $ TRUE :'data.frame':   14 obs. of  11 variables:
+#>   ..$ mpg : num [1:14] 21 21 22.8 21.4 24.4 22.8 32.4 30.4 33.9 21.5 ...
+#>   ..$ cyl : num [1:14] 6 6 4 6 4 4 4 4 4 4 ...
+#>   ..$ disp: num [1:14] 160 160 108 258 147 ...
+#>   ..$ hp  : num [1:14] 110 110 93 110 62 95 66 52 65 97 ...
+#>   ..$ drat: num [1:14] 3.9 3.9 3.85 3.08 3.69 3.92 4.08 4.93 4.22 3.7 ...
+#>   ..$ wt  : num [1:14] 2.62 2.88 2.32 3.21 3.19 ...
+#>   ..$ qsec: num [1:14] 16.5 17 18.6 19.4 20 ...
+#>   ..$ vs  : num [1:14] 0 0 1 1 1 1 1 1 1 1 ...
+#>   ..$ am  : num [1:14] 1 1 1 0 0 0 1 1 1 0 ...
+#>   ..$ gear: num [1:14] 4 4 4 3 4 4 4 4 4 3 ...
+#>   ..$ carb: num [1:14] 4 4 1 1 2 2 1 2 1 1 ...
+```
+
+### filter
+
+``` r
 iris %>% 
   filter_split(
     large_petals = Petal.Length > 5.1,
@@ -322,3 +363,31 @@ starwars %>%
 ```
 
 Use `keep_pattern` and `discard_pattern` for lists and vectors.
+
+## Plucking values
+
+A wrapper around `x[p][i]`:
+
+``` r
+df <- data.frame(
+  id = c(1, 1, 1, 2, 2, 2, 3, 3),
+  tested = c("no", "no", "yes", "no", "no", "no", "yes", "yes"),
+  year = c(2015:2017, 2010:2012, 2019:2020)
+) 
+
+df %>% 
+  group_by(id) %>%
+  mutate(year_first_tested = pluck_when(year, tested == "yes"))
+#> # A tibble: 8 x 4
+#> # Groups:   id [3]
+#>      id tested  year year_first_tested
+#>   <dbl> <chr>  <int>             <int>
+#> 1     1 no      2015              2017
+#> 2     1 no      2016              2017
+#> 3     1 yes     2017              2017
+#> 4     2 no      2010                NA
+#> 5     2 no      2011                NA
+#> 6     2 no      2012                NA
+#> 7     3 yes     2019              2019
+#> 8     3 yes     2020              2019
+```
