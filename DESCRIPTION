@@ -4,11 +4,11 @@ Version: 0.0.1
 Authors@R: 
     person(given = "David",
            family = "Ranzolin",
-           role = c("aut", "cre"),
+           role = c("aut", "cre", "cph"),
            email = "daranzolin@gmail.com")
-Description: Move between dplyr and purrr more efficiently with precision 
+Description: Move between 'dplyr' and 'purrr' more efficiently with precision 
   splitting of data frames. Easily cast variables to different data types. Keep 
-  rows with NAs. Shift row values left or right.
+  rows with NAs. Shift row values. 
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true

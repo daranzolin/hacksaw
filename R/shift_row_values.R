@@ -4,7 +4,7 @@
 #' @param .dir the shift direction as a string, one of "left" or "right".
 #' @param at the row indices at which to shift.
 #'
-#' @return a tibble
+#' @return a data frame.
 #' @export
 #' @examples
 #' library(dplyr)

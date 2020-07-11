@@ -14,3 +14,6 @@ var_max(var, n = 6)
 \description{
 Return the indices of n max values of a variable
 }
+\examples{
+var_max(1:10)
+}

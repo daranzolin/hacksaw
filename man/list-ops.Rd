@@ -16,6 +16,14 @@ discard_pattern(x, pattern, ...)
 
 \item{...}{additional arguments passed to grepl}
 }
+\value{
+A list.
+}
 \description{
 Grep, keep or discard a list or vector by pattern
+}
+\examples{
+l <- list("David", "Daniel", "Damien", "Eric", "Jared", "Zach")
+l \%>\% keep_pattern("^D")
+l \%>\% discard_pattern("^D")
 }

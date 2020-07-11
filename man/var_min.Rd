@@ -14,3 +14,6 @@ var_min(var, n = 6)
 \description{
 Return the indices of n min values of a variable
 }
+\examples{
+var_min(1:10)
+}

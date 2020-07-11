@@ -15,6 +15,13 @@ filter_pattern(.data, col, pattern, ...)
 
 \item{...}{additional arguments passed to grepl}
 }
+\value{
+a data frame.
+}
 \description{
 Grep and filter a data frame by pattern
+}
+\examples{
+library(dplyr)
+starwars \%>\% filter_pattern(homeworld, "oo")
 }

@@ -11,6 +11,9 @@ keep_na(.data, ...)
 
 \item{...}{A selection of columns. If empty, all columns are selected.}
 }
+\value{
+A data frame.
+}
 \description{
 Keep rows containing missing values
 }

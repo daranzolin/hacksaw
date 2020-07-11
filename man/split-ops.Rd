@@ -9,6 +9,7 @@
 \alias{slice_split}
 \alias{pull_split}
 \alias{eval_split}
+\alias{precision_split}
 \title{Perform various operations before splitting}
 \usage{
 filter_split(.data, ...)
@@ -26,6 +27,8 @@ slice_split(.data, ...)
 pull_split(.data, ...)
 
 eval_split(.data, ...)
+
+precision_split(.data, ...)
 }
 \arguments{
 \item{.data}{A data frame.}
@@ -34,6 +37,21 @@ eval_split(.data, ...)
 
 \item{simplify}{Boolean, whether to unlist the returned split.}
 }
+\value{
+A list.
+}
 \description{
-Learn more in \code{vignette("hacksaw-splitting")}.
+Evaluate expressions over a data frame, resulting in a list.
+}
+\examples{
+library(dplyr)
+mtcars \%>\% filter_split(cyl == 4, cyl == 6)
+iris \%>\% select_split(starts_with("Sepal"), starts_with("Petal"))
+mtcars \%>\% mutate_split(mpg2 = mpg^2, mpg3 = mpg^3)
+mtcars \%>\% distinct_split(cyl, carb)
+mtcars \%>\% transmute_split(mpg^2, sqrt(mpg))
+mtcars \%>\% slice_split(1:10, 11:20)
+mtcars \%>\% pull_split(mpg, hp)
+mtcars \%>\% eval_split(select(mpg, hp), filter(mpg>25), mutate(mpg2 = mpg^2))
+mtcars \%>\% precision_split(mpg > 25)
 }

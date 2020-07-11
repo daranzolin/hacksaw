@@ -166,3 +166,20 @@ starwars %>%
 
 Use `keep_pattern` and `discard_pattern` for lists and vectors.
 
+## Plucking values
+
+A wrapper around `x[p][i]`:
+
+```{r}
+df <- data.frame(
+  id = c(1, 1, 1, 2, 2, 2, 3, 3),
+  tested = c("no", "no", "yes", "no", "no", "no", "yes", "yes"),
+  year = c(2015:2017, 2010:2012, 2019:2020)
+) 
+
+df %>% 
+  group_by(id) %>%
+  mutate(year_first_tested = pluck_when(year, tested == "yes"))
+```
+
+

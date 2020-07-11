@@ -14,7 +14,7 @@ shift_row_values(.data, .dir = "left", at = NULL)
 \item{at}{the row indices at which to shift.}
 }
 \value{
-a tibble
+a data frame.
 }
 \description{
 Shift row values left or right

@@ -2,6 +2,7 @@
 #'
 #' @param .data A data frame.
 #' @param ... A selection of columns. If empty, all columns are selected.
+#' @return A data frame.
 #' @examples
 #' library(dplyr)
 #' df <- tibble(x = c(1, 2, NA, NA), y = c("a", NA, "b", NA))
