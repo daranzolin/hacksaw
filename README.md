@@ -25,48 +25,32 @@ remotes::install_github("daranzolin/hacksaw")
 
 ## Split operations
 
+The useful `%->%` operator is re-exported from [the zeallot
+package.](https://github.com/r-lib/zeallot)
+
 ### precision\_split
 
 ``` r
 library(hacksaw)
-library(dplyr)
-#> 
-#> Attaching package: 'dplyr'
-#> The following objects are masked from 'package:stats':
-#> 
-#>     filter, lag
-#> The following objects are masked from 'package:base':
-#> 
-#>     intersect, setdiff, setequal, union
+library(tidyverse)
+#> ── Attaching packages ──────────────────────────────────────────────────────────────────────────── tidyverse 1.3.0 ──
+#> ✓ ggplot2 3.3.0     ✓ purrr   0.3.4
+#> ✓ tibble  3.0.1     ✓ dplyr   1.0.0
+#> ✓ tidyr   1.0.2     ✓ stringr 1.4.0
+#> ✓ readr   1.3.1     ✓ forcats 0.5.0
+#> ── Conflicts ─────────────────────────────────────────────────────────────────────────────── tidyverse_conflicts() ──
+#> x dplyr::filter() masks stats::filter()
+#> x dplyr::lag()    masks stats::lag()
 
 mtcars %>% 
-  precision_split(mpg > 20) %>% 
-  str()
-#> List of 2
-#>  $ FALSE:'data.frame':   18 obs. of  11 variables:
-#>   ..$ mpg : num [1:18] 18.7 18.1 14.3 19.2 17.8 16.4 17.3 15.2 10.4 10.4 ...
-#>   ..$ cyl : num [1:18] 8 6 8 6 6 8 8 8 8 8 ...
-#>   ..$ disp: num [1:18] 360 225 360 168 168 ...
-#>   ..$ hp  : num [1:18] 175 105 245 123 123 180 180 180 205 215 ...
-#>   ..$ drat: num [1:18] 3.15 2.76 3.21 3.92 3.92 3.07 3.07 3.07 2.93 3 ...
-#>   ..$ wt  : num [1:18] 3.44 3.46 3.57 3.44 3.44 ...
-#>   ..$ qsec: num [1:18] 17 20.2 15.8 18.3 18.9 ...
-#>   ..$ vs  : num [1:18] 0 1 0 1 1 0 0 0 0 0 ...
-#>   ..$ am  : num [1:18] 0 0 0 0 0 0 0 0 0 0 ...
-#>   ..$ gear: num [1:18] 3 3 3 4 4 3 3 3 3 3 ...
-#>   ..$ carb: num [1:18] 2 1 4 4 4 3 3 3 4 4 ...
-#>  $ TRUE :'data.frame':   14 obs. of  11 variables:
-#>   ..$ mpg : num [1:14] 21 21 22.8 21.4 24.4 22.8 32.4 30.4 33.9 21.5 ...
-#>   ..$ cyl : num [1:14] 6 6 4 6 4 4 4 4 4 4 ...
-#>   ..$ disp: num [1:14] 160 160 108 258 147 ...
-#>   ..$ hp  : num [1:14] 110 110 93 110 62 95 66 52 65 97 ...
-#>   ..$ drat: num [1:14] 3.9 3.9 3.85 3.08 3.69 3.92 4.08 4.93 4.22 3.7 ...
-#>   ..$ wt  : num [1:14] 2.62 2.88 2.32 3.21 3.19 ...
-#>   ..$ qsec: num [1:14] 16.5 17 18.6 19.4 20 ...
-#>   ..$ vs  : num [1:14] 0 0 1 1 1 1 1 1 1 1 ...
-#>   ..$ am  : num [1:14] 1 1 1 0 0 0 1 1 1 0 ...
-#>   ..$ gear: num [1:14] 4 4 4 3 4 4 4 4 4 3 ...
-#>   ..$ carb: num [1:14] 4 4 1 1 2 2 1 2 1 1 ...
+  precision_split(mpg > 20) %->% c(gt20mpg, lt20mpg)
+
+summary(gt20mpg$mpg)
+#>    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+#>   10.40   14.78   15.65   15.90   18.02   19.70
+summary(lt20mpg$mpg)
+#>    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+#>   21.00   21.43   23.60   25.48   29.62   33.90
 ```
 
 ### filter
@@ -76,34 +60,49 @@ iris %>%
   filter_split(
     large_petals = Petal.Length > 5.1,
     large_sepals = Sepal.Length > 6.4) %>% 
-  str()
-#> List of 2
-#>  $ large_petals:'data.frame':    34 obs. of  5 variables:
-#>   ..$ Sepal.Length: num [1:34] 6.3 7.1 6.3 6.5 7.6 7.3 6.7 7.2 6.4 6.8 ...
-#>   ..$ Sepal.Width : num [1:34] 3.3 3 2.9 3 3 2.9 2.5 3.6 2.7 3 ...
-#>   ..$ Petal.Length: num [1:34] 6 5.9 5.6 5.8 6.6 6.3 5.8 6.1 5.3 5.5 ...
-#>   ..$ Petal.Width : num [1:34] 2.5 2.1 1.8 2.2 2.1 1.8 1.8 2.5 1.9 2.1 ...
-#>   ..$ Species     : Factor w/ 3 levels "setosa","versicolor",..: 3 3 3 3 3 3 3 3 3 3 ...
-#>  $ large_sepals:'data.frame':    35 obs. of  5 variables:
-#>   ..$ Sepal.Length: num [1:35] 7 6.9 6.5 6.6 6.7 6.6 6.8 6.7 6.7 7.1 ...
-#>   ..$ Sepal.Width : num [1:35] 3.2 3.1 2.8 2.9 3.1 3 2.8 3 3.1 3 ...
-#>   ..$ Petal.Length: num [1:35] 4.7 4.9 4.6 4.6 4.4 4.4 4.8 5 4.7 5.9 ...
-#>   ..$ Petal.Width : num [1:35] 1.4 1.5 1.5 1.3 1.4 1.4 1.4 1.7 1.5 2.1 ...
-#>   ..$ Species     : Factor w/ 3 levels "setosa","versicolor",..: 2 2 2 2 2 2 2 2 2 3 ...
+  map(summary)
+#> $large_petals
+#>   Sepal.Length    Sepal.Width     Petal.Length    Petal.Width   
+#>  Min.   :6.100   Min.   :2.500   Min.   :5.200   Min.   :1.400  
+#>  1st Qu.:6.400   1st Qu.:2.900   1st Qu.:5.525   1st Qu.:1.900  
+#>  Median :6.700   Median :3.000   Median :5.700   Median :2.100  
+#>  Mean   :6.862   Mean   :3.071   Mean   :5.826   Mean   :2.094  
+#>  3rd Qu.:7.200   3rd Qu.:3.200   3rd Qu.:6.075   3rd Qu.:2.300  
+#>  Max.   :7.900   Max.   :3.800   Max.   :6.900   Max.   :2.500  
+#>        Species  
+#>  setosa    : 0  
+#>  versicolor: 0  
+#>  virginica :34  
+#>                 
+#>                 
+#>                 
+#> 
+#> $large_sepals
+#>   Sepal.Length    Sepal.Width     Petal.Length    Petal.Width         Species  
+#>  Min.   :6.500   Min.   :2.500   Min.   :4.400   Min.   :1.30   setosa    : 0  
+#>  1st Qu.:6.700   1st Qu.:3.000   1st Qu.:5.050   1st Qu.:1.65   versicolor: 9  
+#>  Median :6.800   Median :3.000   Median :5.700   Median :2.00   virginica :26  
+#>  Mean   :6.971   Mean   :3.071   Mean   :5.569   Mean   :1.94                  
+#>  3rd Qu.:7.200   3rd Qu.:3.200   3rd Qu.:6.050   3rd Qu.:2.25                  
+#>  Max.   :7.900   Max.   :3.800   Max.   :6.900   Max.   :2.50
 ```
 
 ### select
 
 ``` r
 iris %>% 
-  select_split(starts_with("Sepal"),
-               starts_with("Petal")) %>% 
+  select_split(
+    sepal_data = c(Species, starts_with("Sepal")),
+    petal_data = c(Species, starts_with("Petal"))
+  ) %>% 
   str()
 #> List of 2
-#>  $ :'data.frame':    150 obs. of  2 variables:
+#>  $ sepal_data:'data.frame':  150 obs. of  3 variables:
+#>   ..$ Species     : Factor w/ 3 levels "setosa","versicolor",..: 1 1 1 1 1 1 1 1 1 1 ...
 #>   ..$ Sepal.Length: num [1:150] 5.1 4.9 4.7 4.6 5 5.4 4.6 5 4.4 4.9 ...
 #>   ..$ Sepal.Width : num [1:150] 3.5 3 3.2 3.1 3.6 3.9 3.4 3.4 2.9 3.1 ...
-#>  $ :'data.frame':    150 obs. of  2 variables:
+#>  $ petal_data:'data.frame':  150 obs. of  3 variables:
+#>   ..$ Species     : Factor w/ 3 levels "setosa","versicolor",..: 1 1 1 1 1 1 1 1 1 1 ...
 #>   ..$ Petal.Length: num [1:150] 1.4 1.4 1.3 1.5 1.4 1.7 1.4 1.5 1.4 1.5 ...
 #>   ..$ Petal.Width : num [1:150] 0.2 0.2 0.2 0.2 0.2 0.4 0.3 0.2 0.2 0.1 ...
 ```
@@ -124,8 +123,10 @@ starwars %>%
 
 ``` r
 iris %>% 
-  mutate_split(Sepal.Length2 = Sepal.Length * 2,
-               Sepal.Length3 = Sepal.Length * 3) %>% 
+  mutate_split(
+    Sepal.Length2 = Sepal.Length * 2,
+    Sepal.Length3 = Sepal.Length * 3
+    ) %>% 
   str()
 #> List of 2
 #>  $ :'data.frame':    150 obs. of  6 variables:
@@ -313,7 +314,7 @@ df %>% keep_na(x, y)
 Shift values across rows in either direction
 
 ``` r
-df <- data.frame(
+df <- tibble(
   s = c(NA, 1, NA, NA),
   t = c(NA, NA, 1, NA),
   u = c(NA, NA, 2, 5),
@@ -323,30 +324,38 @@ df <- data.frame(
   z = 1:4
 )
 df
-#>    s  t  u v x  y z
-#> 1 NA NA NA 5 1 NA 1
-#> 2  1 NA NA 1 5 NA 2
-#> 3 NA  1  2 9 6  8 3
-#> 4 NA NA  5 2 7 NA 4
+#> # A tibble: 4 x 7
+#>       s     t     u     v     x     y     z
+#>   <dbl> <dbl> <dbl> <dbl> <dbl> <dbl> <int>
+#> 1    NA    NA    NA     5     1    NA     1
+#> 2     1    NA    NA     1     5    NA     2
+#> 3    NA     1     2     9     6     8     3
+#> 4    NA    NA     5     2     7    NA     4
 
 shift_row_values(df)
-#>   s t u  v  x  y  z
-#> 1 5 1 1 NA NA NA NA
-#> 2 1 1 5  2 NA NA NA
-#> 3 1 2 9  6  8  3 NA
-#> 4 5 2 7  4 NA NA NA
+#> # A tibble: 4 x 7
+#>       s     t     u     v     x     y     z
+#>   <dbl> <dbl> <dbl> <dbl> <dbl> <dbl> <int>
+#> 1     5     1     1    NA    NA    NA    NA
+#> 2     1     1     5     2    NA    NA    NA
+#> 3     1     2     9     6     8     3    NA
+#> 4     5     2     7     4    NA    NA    NA
 shift_row_values(df, at = 1:3)
-#>    s  t u  v  x  y  z
-#> 1  5  1 1 NA NA NA NA
-#> 2  1  1 5  2 NA NA NA
-#> 3  1  2 9  6  8  3 NA
-#> 4 NA NA 5  2  7 NA  4
+#> # A tibble: 4 x 7
+#>       s     t     u     v     x     y     z
+#>   <dbl> <dbl> <dbl> <dbl> <dbl> <dbl> <int>
+#> 1     5     1     1    NA    NA    NA    NA
+#> 2     1     1     5     2    NA    NA    NA
+#> 3     1     2     9     6     8     3    NA
+#> 4    NA    NA     5     2     7    NA     4
 shift_row_values(df, at = 1:2, .dir = "right")
-#>    s  t  u  v x  y z
-#> 1 NA NA NA NA 5  1 1
-#> 2 NA NA NA  1 1  5 2
-#> 3 NA  1  2  9 6  8 3
-#> 4 NA NA  5  2 7 NA 4
+#> # A tibble: 4 x 7
+#>       s     t     u     v     x     y     z
+#>   <dbl> <dbl> <dbl> <dbl> <dbl> <dbl> <int>
+#> 1    NA    NA    NA    NA     5     1     1
+#> 2    NA    NA    NA     1     1     5     2
+#> 3    NA     1     2     9     6     8     3
+#> 4    NA    NA     5     2     7    NA     4
 ```
 
 ## Filtering, keeping, and discarding patterns
@@ -369,7 +378,7 @@ Use `keep_pattern` and `discard_pattern` for lists and vectors.
 A wrapper around `x[p][i]`:
 
 ``` r
-df <- data.frame(
+df <- tibble(
   id = c(1, 1, 1, 2, 2, 2, 3, 3),
   tested = c("no", "no", "yes", "no", "no", "no", "yes", "yes"),
   year = c(2015:2017, 2010:2012, 2019:2020)
