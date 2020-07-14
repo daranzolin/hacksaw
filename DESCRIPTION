@@ -7,7 +7,7 @@ Authors@R:
            role = c("aut", "cre", "cph"),
            email = "daranzolin@gmail.com")
 Description: Move between data frames and lists more efficiently with precision 
-  splitting. Easily cast variables to different data types. Keep 
+  splitting via 'dplyr' verbs. Easily cast variables to different data types. Keep 
   rows with NAs. Shift row values.
 License: MIT + file LICENSE
 Encoding: UTF-8
