@@ -12,8 +12,8 @@ status](https://travis-ci.org/daranzolin/hacksaw.svg?branch=master)](https://tra
 
 hacksaw is as an adhesive between various dplyr and purrr operations,
 with some extra tidyverse-like functionality (e.g. keeping NAs, shifting
-row values) and shortcuts (filter/keep/discard + grepl, mutate(var =
-as.\*(var))).
+row values) and shortcuts (e.g. filtering patterns, casting, plucking,
+etc.).
 
 ## Installation
 
@@ -25,7 +25,13 @@ remotes::install_github("daranzolin/hacksaw")
 
 ## Split operations
 
-The useful `%->%` operator is re-exported from [the zeallot
+hacksaw’s assortment of split operations recycle the original data
+frame. This is useful when you want to run slightly different code on
+the same object multiple times (e.g. assignment) or you want to take
+advantage of some list functionality (e.g. purrr, `lengths()`, `%->%`,
+etc.).
+
+The useful`%<-%` and `%->%` operators are re-exported from [the zeallot
 package.](https://github.com/r-lib/zeallot)
 
 ### precision\_split
@@ -112,7 +118,7 @@ iris %>%
 ``` r
 starwars %>% 
   distinct_split(skin_color, eye_color, homeworld) %>% 
-  str()
+  str() # lengths() is also useful
 #> List of 3
 #>  $ : chr [1:31] "fair" "gold" "white, blue" "white" ...
 #>  $ : chr [1:15] "blue" "yellow" "red" "brown" ...
@@ -252,7 +258,7 @@ mtcars %>%
 
 ## Casting
 
-Tired of `mutate(... = as....(...))`?
+Tired of `mutate(var = as.[character|numeric|logical](var))`?
 
 ``` r
 starwars %>% cast_character(height, mass) %>% str(max.level = 2) 
@@ -311,7 +317,8 @@ df %>% keep_na(x, y)
 
 ## Shifting row values
 
-Shift values across rows in either direction
+Shift values across rows in either direction. Sometimes useful when
+importing irregularly-shaped tabular data.
 
 ``` r
 df <- tibble(
@@ -359,6 +366,8 @@ shift_row_values(df, at = 1:2, .dir = "right")
 ```
 
 ## Filtering, keeping, and discarding patterns
+
+A wrapper around `filter(grepl(..., var))`:
 
 ``` r
 starwars %>% 

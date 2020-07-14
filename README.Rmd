@@ -21,7 +21,7 @@ knitr::opts_chunk$set(
 [![Travis build status](https://travis-ci.org/daranzolin/hacksaw.svg?branch=master)](https://travis-ci.com/daranzolin/hacksaw)
 <!-- badges: end -->
 
-hacksaw is as an adhesive between various dplyr and purrr operations, with some extra tidyverse-like functionality (e.g. keeping NAs, shifting row values) and shortcuts (filter/keep/discard + grepl, mutate(var = as.*(var))).
+hacksaw is as an adhesive between various dplyr and purrr operations, with some extra tidyverse-like functionality (e.g. keeping NAs, shifting row values) and shortcuts (e.g. filtering patterns, casting, plucking, etc.).
 
 ## Installation
 
@@ -33,9 +33,13 @@ remotes::install_github("daranzolin/hacksaw")
 
 ## Split operations
 
-The useful `%->%` operator is re-exported from [the zeallot package.](https://github.com/r-lib/zeallot)
+hacksaw's assortment of split operations recycle the original data frame. This is useful when you want to run slightly different code on the same object multiple times (e.g. assignment) or you want to take advantage of some list functionality (e.g. purrr, `lengths()`, `%->%`, etc.). 
+
+The useful`%<-%` and `%->%` operators are re-exported from [the zeallot package.](https://github.com/r-lib/zeallot)
 
 ### precision_split
+
+`precision_split` splits the mtcars data frame into two: one with mpg greater than 20, one with mpg less than 20:
 
 ```{r}
 library(hacksaw)
@@ -61,6 +65,8 @@ iris %>%
 
 ### select
 
+Include multiple columns and select helpers within `c()`:
+
 ```{r}
 iris %>% 
   select_split(
@@ -72,10 +78,12 @@ iris %>%
 
 ### distinct
 
+Easily get the unique values of multiple columns, 
+
 ```{r}
 starwars %>% 
   distinct_split(skin_color, eye_color, homeworld) %>% 
-  str()
+  str() # lengths() is also useful
 ```
 
 ### mutate
@@ -131,7 +139,7 @@ mtcars %>%
 
 ## Casting
 
-Tired of `mutate(... = as....(...))`? 
+Tired of `mutate(var = as.[character|numeric|logical](var))`? 
 
 ```{r}
 starwars %>% cast_character(height, mass) %>% str(max.level = 2) 
@@ -142,7 +150,7 @@ hacksaw also includes `cast_numeric` and `cast_logical`.
 
 ## Keeping NAs
 
-The reverse of `tidyr::drop_na`.
+The reverse of `tidyr::drop_na`, strangely omitted in the original tidyverse. 
 
 ```{r}
 df <- tibble(x = c(1, 2, NA, NA, NA), y = c("a", NA, "b", NA, NA))
@@ -153,7 +161,7 @@ df %>% keep_na(x, y)
 
 ## Shifting row values
 
-Shift values across rows in either direction
+Shift values across rows in either direction. Sometimes useful when importing irregularly-shaped tabular data.
 
 ```{r}
 df <- tibble(
@@ -174,6 +182,8 @@ shift_row_values(df, at = 1:2, .dir = "right")
 ```
 
 ## Filtering, keeping, and discarding patterns
+
+A wrapper around `filter(grepl(..., var))`:
 
 ```{r}
 starwars %>% 
