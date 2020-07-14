@@ -36,6 +36,9 @@ package.](https://github.com/r-lib/zeallot)
 
 ### precision\_split
 
+`precision_split` splits the mtcars data frame into two: one with mpg
+greater than 20, one with mpg less than 20:
+
 ``` r
 library(hacksaw)
 library(tidyverse)
@@ -51,12 +54,32 @@ library(tidyverse)
 mtcars %>% 
   precision_split(mpg > 20) %->% c(gt20mpg, lt20mpg)
 
-summary(gt20mpg$mpg)
-#>    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-#>   10.40   14.78   15.65   15.90   18.02   19.70
-summary(lt20mpg$mpg)
-#>    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-#>   21.00   21.43   23.60   25.48   29.62   33.90
+str(gt20mpg)
+#> 'data.frame':    18 obs. of  11 variables:
+#>  $ mpg : num  18.7 18.1 14.3 19.2 17.8 16.4 17.3 15.2 10.4 10.4 ...
+#>  $ cyl : num  8 6 8 6 6 8 8 8 8 8 ...
+#>  $ disp: num  360 225 360 168 168 ...
+#>  $ hp  : num  175 105 245 123 123 180 180 180 205 215 ...
+#>  $ drat: num  3.15 2.76 3.21 3.92 3.92 3.07 3.07 3.07 2.93 3 ...
+#>  $ wt  : num  3.44 3.46 3.57 3.44 3.44 ...
+#>  $ qsec: num  17 20.2 15.8 18.3 18.9 ...
+#>  $ vs  : num  0 1 0 1 1 0 0 0 0 0 ...
+#>  $ am  : num  0 0 0 0 0 0 0 0 0 0 ...
+#>  $ gear: num  3 3 3 4 4 3 3 3 3 3 ...
+#>  $ carb: num  2 1 4 4 4 3 3 3 4 4 ...
+str(lt20mpg)
+#> 'data.frame':    14 obs. of  11 variables:
+#>  $ mpg : num  21 21 22.8 21.4 24.4 22.8 32.4 30.4 33.9 21.5 ...
+#>  $ cyl : num  6 6 4 6 4 4 4 4 4 4 ...
+#>  $ disp: num  160 160 108 258 147 ...
+#>  $ hp  : num  110 110 93 110 62 95 66 52 65 97 ...
+#>  $ drat: num  3.9 3.9 3.85 3.08 3.69 3.92 4.08 4.93 4.22 3.7 ...
+#>  $ wt  : num  2.62 2.88 2.32 3.21 3.19 ...
+#>  $ qsec: num  16.5 17 18.6 19.4 20 ...
+#>  $ vs  : num  0 0 1 1 1 1 1 1 1 1 ...
+#>  $ am  : num  1 1 1 0 0 0 1 1 1 0 ...
+#>  $ gear: num  4 4 4 3 4 4 4 4 4 3 ...
+#>  $ carb: num  4 4 1 1 2 2 1 2 1 1 ...
 ```
 
 ### filter
@@ -65,7 +88,8 @@ summary(lt20mpg$mpg)
 iris %>% 
   filter_split(
     large_petals = Petal.Length > 5.1,
-    large_sepals = Sepal.Length > 6.4) %>% 
+    large_sepals = Sepal.Length > 6.4
+  ) %>% 
   map(summary)
 #> $large_petals
 #>   Sepal.Length    Sepal.Width     Petal.Length    Petal.Width   
@@ -95,6 +119,8 @@ iris %>%
 
 ### select
 
+Include multiple columns and select helpers within `c()`:
+
 ``` r
 iris %>% 
   select_split(
@@ -115,6 +141,8 @@ iris %>%
 
 ### distinct
 
+Easily get the unique values of multiple columns,
+
 ``` r
 starwars %>% 
   distinct_split(skin_color, eye_color, homeworld) %>% 
@@ -132,7 +160,7 @@ iris %>%
   mutate_split(
     Sepal.Length2 = Sepal.Length * 2,
     Sepal.Length3 = Sepal.Length * 3
-    ) %>% 
+  ) %>% 
   str()
 #> List of 2
 #>  $ :'data.frame':    150 obs. of  6 variables:
@@ -290,7 +318,8 @@ hacksaw also includes `cast_numeric` and `cast_logical`.
 
 ## Keeping NAs
 
-The reverse of `tidyr::drop_na`.
+The reverse of `tidyr::drop_na`, strangely omitted in the original
+tidyverse.
 
 ``` r
 df <- tibble(x = c(1, 2, NA, NA, NA), y = c("a", NA, "b", NA, NA))

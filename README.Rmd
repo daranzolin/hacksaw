@@ -48,8 +48,8 @@ library(tidyverse)
 mtcars %>% 
   precision_split(mpg > 20) %->% c(gt20mpg, lt20mpg)
 
-summary(gt20mpg$mpg)
-summary(lt20mpg$mpg)
+str(gt20mpg)
+str(lt20mpg)
 ```
 
 
@@ -59,7 +59,8 @@ summary(lt20mpg$mpg)
 iris %>% 
   filter_split(
     large_petals = Petal.Length > 5.1,
-    large_sepals = Sepal.Length > 6.4) %>% 
+    large_sepals = Sepal.Length > 6.4
+  ) %>% 
   map(summary)
 ```
 
@@ -93,7 +94,7 @@ iris %>%
   mutate_split(
     Sepal.Length2 = Sepal.Length * 2,
     Sepal.Length3 = Sepal.Length * 3
-    ) %>% 
+  ) %>% 
   str()
 ```
 
