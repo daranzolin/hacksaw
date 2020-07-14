@@ -2,7 +2,7 @@
 #'
 #' Evaluate expressions over a data frame, resulting in a list.
 #'
-#' @param .data A data frame.
+#' @param .data A table of data.
 #' @param simplify Boolean, whether to unlist the returned split.
 #' @param ... Expressions to be evaluated.
 #' @return A list.

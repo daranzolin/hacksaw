@@ -13,9 +13,9 @@ cast_numeric(.data, ...)
 cast_logical(.data, ...)
 }
 \arguments{
-\item{.data}{a table of data}
+\item{.data}{a table of data.}
 
-\item{...}{A selection of columns}
+\item{...}{A selection of columns.}
 }
 \value{
 a data frame.

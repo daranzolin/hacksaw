@@ -10,11 +10,11 @@ keep_pattern(x, pattern, ...)
 discard_pattern(x, pattern, ...)
 }
 \arguments{
-\item{x}{a list of vector}
+\item{x}{a list or vector.}
 
 \item{pattern}{string containing a regular expression to be matched in the given character vector.}
 
-\item{...}{additional arguments passed to grepl}
+\item{...}{additional arguments passed to grepl.}
 }
 \value{
 A list.

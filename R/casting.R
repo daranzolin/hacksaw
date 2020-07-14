@@ -1,7 +1,7 @@
 #' Cast columns to a specified data type
 #'
-#' @param .data a table of data
-#' @param ... A selection of columns
+#' @param .data a table of data.
+#' @param ... A selection of columns.
 #'
 #' @export
 #' @rdname casting

@@ -18,9 +18,9 @@ filter_pattern <- function(.data, col, pattern, ...) {
 
 #' Grep, keep or discard a list or vector by pattern
 #'
-#' @param x a list of vector
+#' @param x a list or vector.
 #' @param pattern string containing a regular expression to be matched in the given character vector.
-#' @param ... additional arguments passed to grepl
+#' @param ... additional arguments passed to grepl.
 #' @return A list.
 #'
 #' @rdname list-ops

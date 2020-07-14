@@ -31,7 +31,7 @@ eval_split(.data, ...)
 precision_split(.data, ...)
 }
 \arguments{
-\item{.data}{A data frame.}
+\item{.data}{A table of data.}
 
 \item{...}{Expressions to be evaluated.}
 

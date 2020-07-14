@@ -7,7 +7,7 @@
 keep_na(.data, ...)
 }
 \arguments{
-\item{.data}{A data frame.}
+\item{.data}{A table of data.}
 
 \item{...}{A selection of columns. If empty, all columns are selected.}
 }

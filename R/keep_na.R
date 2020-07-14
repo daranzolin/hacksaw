@@ -1,6 +1,6 @@
 #' Keep rows containing missing values
 #'
-#' @param .data A data frame.
+#' @param .data A table of data.
 #' @param ... A selection of columns. If empty, all columns are selected.
 #' @return A data frame.
 #' @examples
@@ -13,6 +13,7 @@
 #' df %>% keep_na(x, any_of(vars))
 #' @export
 keep_na <- function(.data, ...) {
+  .data <- assert_df(.data)
   vars <- tidyselect::eval_select(rlang::expr(c(...)), .data)
   if (rlang::is_empty(vars)) {
     na_vars <- .data
