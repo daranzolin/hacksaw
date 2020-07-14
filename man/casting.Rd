@@ -24,7 +24,8 @@ a data frame.
 Cast columns to a specified data type
 }
 \examples{
-df <- data.frame(x = 1:3, y = as.character(1:3), z = c(0, 0, 1))
+library(dplyr)
+df <- tibble(x = 1:3, y = as.character(1:3), z = c(0, 0, 1))
 df \%>\% cast_character(x)
 df \%>\% cast_numeric(y)
 df \%>\% cast_logical(z)

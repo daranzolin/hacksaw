@@ -23,7 +23,7 @@ Pluck a value based on other criteria
 }
 \examples{
 library(dplyr)
-df <- data.frame(
+df <- tibble(
 id = c(1, 1, 1, 2, 2, 2, 3, 3),
 tested = c("no", "no", "yes", "no", "no", "no", "yes", "yes"),
 year = c(2015:2017, 2010:2012, 2019:2020)

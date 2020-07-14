@@ -2,11 +2,16 @@
 % Please edit documentation in R/reexports.R
 \name{\%<-\%}
 \alias{\%<-\%}
+\alias{\%->\%}
 \title{Assign values to names}
 \usage{
 x \%<-\% value
+
+value \%->\% x
 }
 \description{
 See \code{\link[zeallot]{\%<-\%}} for more details.
+
+See \code{\link[zeallot]{\%->\%}} for more details.
 }
 \keyword{internal}
