@@ -28,4 +28,3 @@ Suggests:
     knitr,
     rmarkdown,
     tidyr
-VignetteBuilder: knitr
