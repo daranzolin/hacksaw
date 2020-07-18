@@ -6,7 +6,8 @@
 <!-- badges: start -->
 
 ![](https://camo.githubusercontent.com/ea6e0ff99602c3563e3dd684abf60b30edceaeef/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f6c6966656379636c652d6578706572696d656e74616c2d6f72616e67652e737667)
-![CRAN log](http://www.r-pkg.org/badges/version/hacksaw) [![Travis build
+![CRAN log](http://www.r-pkg.org/badges/version/hacksaw)
+![](http://cranlogs.r-pkg.org/badges/last-week/hacksaw) [![Travis build
 status](https://travis-ci.org/daranzolin/hacksaw.svg?branch=master)](https://travis-ci.com/daranzolin/hacksaw)
 <!-- badges: end -->
 
@@ -17,7 +18,13 @@ etc.).
 
 ## Installation
 
-You can install the released version of hacksaw from GitHub with:
+You can install the released version of hacksaw from CRAN with:
+
+``` r
+install.packages("hacksaw")
+```
+
+Or install the development version from GitHub with:
 
 ``` r
 remotes::install_github("daranzolin/hacksaw")
@@ -42,12 +49,13 @@ greater than 20, one with mpg less than 20:
 ``` r
 library(hacksaw)
 library(tidyverse)
-#> ── Attaching packages ──────────────────────────────────────────────────────────────────────────── tidyverse 1.3.0 ──
+#> ── Attaching packages ──────────────────────────────────────────────────────────────────────────────────── tidyverse 1.3.0 ──
 #> ✓ ggplot2 3.3.0     ✓ purrr   0.3.4
-#> ✓ tibble  3.0.1     ✓ dplyr   1.0.0
+#> ✓ tibble  3.0.2     ✓ dplyr   1.0.0
 #> ✓ tidyr   1.0.2     ✓ stringr 1.4.0
 #> ✓ readr   1.3.1     ✓ forcats 0.5.0
-#> ── Conflicts ─────────────────────────────────────────────────────────────────────────────── tidyverse_conflicts() ──
+#> Warning: package 'tibble' was built under R version 4.0.2
+#> ── Conflicts ─────────────────────────────────────────────────────────────────────────────────────── tidyverse_conflicts() ──
 #> x dplyr::filter() masks stats::filter()
 #> x dplyr::lag()    masks stats::lag()
 
