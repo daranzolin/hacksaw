@@ -18,7 +18,7 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 ![](https://camo.githubusercontent.com/ea6e0ff99602c3563e3dd684abf60b30edceaeef/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f6c6966656379636c652d6578706572696d656e74616c2d6f72616e67652e737667)
 ![CRAN log](http://www.r-pkg.org/badges/version/hacksaw)
-![](http://cranlogs.r-pkg.org/badges/last-week/hacksaw)
+![](http://cranlogs.r-pkg.org/badges/grand-total/hacksaw)
 [![Travis build status](https://travis-ci.org/daranzolin/hacksaw.svg?branch=master)](https://travis-ci.com/daranzolin/hacksaw)
 <!-- badges: end -->
 
@@ -45,25 +45,12 @@ hacksaw's assortment of split operations recycle the original data frame. This i
 
 The useful`%<-%` and `%->%` operators are re-exported from [the zeallot package.](https://github.com/r-lib/zeallot)
 
-### precision_split
-
-`precision_split` splits the mtcars data frame into two: one with mpg greater than 20, one with mpg less than 20:
-
-```{r}
-library(hacksaw)
-library(tidyverse)
-
-mtcars %>% 
-  precision_split(mpg > 20) %->% c(gt20mpg, lt20mpg)
-
-str(gt20mpg)
-str(lt20mpg)
-```
-
-
 ### filter
 
 ```{r warning=FALSE, message=FALSE}
+library(hacksaw)
+library(tidyverse)
+
 iris %>% 
   filter_split(
     large_petals = Petal.Length > 5.1,
@@ -129,10 +116,23 @@ iris %>%
   slice_split(
     largest_sepals = var_max(Sepal.Length, 4),
     smallest_sepals = var_min(Sepal.Length, 4)
-  )
+  )#
 ```
 
-## eval_split
+### precision_split
+
+`precision_split` splits the mtcars data frame into two: one with mpg greater than 20, one with mpg less than 20:
+
+```{r}
+mtcars %>% 
+  precision_split(mpg > 20) %->% c(lt20mpg, gt20mpg)
+
+str(gt20mpg)
+str(lt20mpg)
+```
+
+
+### eval_split
 
 Evaluate any expression:
 
