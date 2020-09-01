@@ -3,6 +3,7 @@
 \name{filter_split}
 \alias{filter_split}
 \alias{select_split}
+\alias{count_split}
 \alias{mutate_split}
 \alias{distinct_split}
 \alias{transmute_split}
@@ -15,6 +16,8 @@
 filter_split(.data, ...)
 
 select_split(.data, ...)
+
+count_split(.data, ...)
 
 mutate_split(.data, ...)
 
@@ -47,6 +50,7 @@ Evaluate expressions over a data frame, resulting in a list.
 library(dplyr)
 mtcars \%>\% filter_split(cyl == 4, cyl == 6)
 iris \%>\% select_split(starts_with("Sepal"), starts_with("Petal"))
+mtcars \%>\% count_split(gear, carb)
 mtcars \%>\% mutate_split(mpg2 = mpg^2, mpg3 = mpg^3)
 mtcars \%>\% distinct_split(cyl, carb)
 mtcars \%>\% transmute_split(mpg^2, sqrt(mpg))

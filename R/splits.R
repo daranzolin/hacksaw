@@ -26,6 +26,14 @@ select_split <- function(.data, ...) {
 #' @rdname split-ops
 #' @export
 #' @examples
+#' mtcars %>% count_split(gear, carb)
+count_split <- function(.data, ...) {
+  iterate_expressions(.data, "count", ...)
+}
+
+#' @rdname split-ops
+#' @export
+#' @examples
 #' mtcars %>% mutate_split(mpg2 = mpg^2, mpg3 = mpg^3)
 mutate_split <- function(.data, ...) {
   q <- rlang::enquos(...)
