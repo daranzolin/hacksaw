@@ -72,9 +72,30 @@ iris %>%
   str()
 ```
 
+### count
+
+Count across multiple variables:
+
+```{r}
+mtcars %>% 
+  count_split(
+    across(matches("cyl|carb")),
+    across(matches("cyl|gear"))
+  )
+
+# Or
+
+mtcars %>% 
+  group_by(cyl) %>% 
+  count_split(
+    carb,
+    gear
+  )
+```
+
 ### distinct
 
-Easily get the unique values of multiple columns, 
+Easily get the unique values of multiple columns:
 
 ```{r}
 starwars %>% 
