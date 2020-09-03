@@ -26,7 +26,7 @@ select_split <- function(.data, ...) {
 #' @rdname split-ops
 #' @export
 #' @examples
-#' mtcars %>% count_split(gear, carb)
+#' mtcars %>% count_split(gear, carb, across(c(cyl, gear)))
 count_split <- function(.data, ...) {
   iterate_expressions(.data, "count", ...)
 }
@@ -136,8 +136,17 @@ var_min <- function(var, n = 6) {
 }
 
 iterate_expressions <- function(.data, verb, ...) {
-  exprs <- rlang::enquos(...)
-  expr_list <- list(exprs)
+  expr_list <- q_list(...)
   f <- utils::getFromNamespace(verb, "dplyr")
+  if (verb == "count") {
+    return(purrr::map(expr_list[[1]], function(expr) f(.data, !!expr, sort = TRUE)))
+  }
   purrr::map(expr_list[[1]], function(expr) f(.data, !!expr))
 }
+
+q_list <- function(...) {
+  exprs <- rlang::enquos(...)
+  expr_list <- list(exprs)
+  expr_list
+}
+

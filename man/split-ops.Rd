@@ -50,7 +50,7 @@ Evaluate expressions over a data frame, resulting in a list.
 library(dplyr)
 mtcars \%>\% filter_split(cyl == 4, cyl == 6)
 iris \%>\% select_split(starts_with("Sepal"), starts_with("Petal"))
-mtcars \%>\% count_split(gear, carb)
+mtcars \%>\% count_split(gear, carb, across(c(cyl, gear)))
 mtcars \%>\% mutate_split(mpg2 = mpg^2, mpg3 = mpg^3)
 mtcars \%>\% distinct_split(cyl, carb)
 mtcars \%>\% transmute_split(mpg^2, sqrt(mpg))
