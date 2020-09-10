@@ -109,68 +109,35 @@ Count across multiple variables:
 ``` r
 mtcars %>% 
   count_split(
-    across(matches("cyl|carb")),
-    across(matches("cyl|gear"))
-  )
-#> [[1]]
-#>   cyl carb n
-#> 1   4    1 5
-#> 2   4    2 6
-#> 3   6    1 2
-#> 4   6    4 4
-#> 5   6    6 1
-#> 6   8    2 4
-#> 7   8    3 3
-#> 8   8    4 6
-#> 9   8    8 1
-#> 
-#> [[2]]
-#>   cyl gear  n
-#> 1   4    3  1
-#> 2   4    4  8
-#> 3   4    5  2
-#> 4   6    3  2
-#> 5   6    4  4
-#> 6   6    5  1
-#> 7   8    3 12
-#> 8   8    5  2
-
-# Or
-
-mtcars %>% 
-  group_by(cyl) %>% 
-  count_split(
+    cyl,
     carb,
-    gear
+    across(c(cyl, gear))
   )
 #> [[1]]
-#> # A tibble: 9 x 3
-#> # Groups:   cyl [3]
-#>     cyl  carb     n
-#>   <dbl> <dbl> <int>
-#> 1     4     1     5
-#> 2     4     2     6
-#> 3     6     1     2
-#> 4     6     4     4
-#> 5     6     6     1
-#> 6     8     2     4
-#> 7     8     3     3
-#> 8     8     4     6
-#> 9     8     8     1
+#>   cyl  n
+#> 1   8 14
+#> 2   4 11
+#> 3   6  7
 #> 
 #> [[2]]
-#> # A tibble: 8 x 3
-#> # Groups:   cyl [3]
-#>     cyl  gear     n
-#>   <dbl> <dbl> <int>
-#> 1     4     3     1
-#> 2     4     4     8
-#> 3     4     5     2
-#> 4     6     3     2
-#> 5     6     4     4
-#> 6     6     5     1
-#> 7     8     3    12
-#> 8     8     5     2
+#>   carb  n
+#> 1    2 10
+#> 2    4 10
+#> 3    1  7
+#> 4    3  3
+#> 5    6  1
+#> 6    8  1
+#> 
+#> [[3]]
+#>   cyl gear  n
+#> 1   8    3 12
+#> 2   4    4  8
+#> 3   6    4  4
+#> 4   4    5  2
+#> 5   6    3  2
+#> 6   8    5  2
+#> 7   4    3  1
+#> 8   6    5  1
 ```
 
 ### distinct

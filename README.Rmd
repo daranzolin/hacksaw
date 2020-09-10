@@ -79,17 +79,9 @@ Count across multiple variables:
 ```{r}
 mtcars %>% 
   count_split(
-    across(matches("cyl|carb")),
-    across(matches("cyl|gear"))
-  )
-
-# Or
-
-mtcars %>% 
-  group_by(cyl) %>% 
-  count_split(
+    cyl,
     carb,
-    gear
+    across(c(cyl, gear))
   )
 ```
 
