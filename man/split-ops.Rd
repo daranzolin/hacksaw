@@ -9,6 +9,7 @@
 \alias{transmute_split}
 \alias{slice_split}
 \alias{pull_split}
+\alias{group_by_split}
 \alias{eval_split}
 \alias{precision_split}
 \title{Perform various operations before splitting}
@@ -28,6 +29,8 @@ transmute_split(.data, ..., simplify = TRUE)
 slice_split(.data, ...)
 
 pull_split(.data, ...)
+
+group_by_split(.data, ...)
 
 eval_split(.data, ...)
 
@@ -56,6 +59,7 @@ mtcars \%>\% distinct_split(cyl, carb)
 mtcars \%>\% transmute_split(mpg^2, sqrt(mpg))
 mtcars \%>\% slice_split(1:10, 11:20)
 mtcars \%>\% pull_split(mpg, hp)
+mtcars \%>\% group_by_split(cyl, gear, across(c(cyl, gear)))
 mtcars \%>\% eval_split(select(mpg, hp), filter(mpg>25), mutate(mpg2 = mpg^2))
 mtcars \%>\% precision_split(mpg > 25)
 }

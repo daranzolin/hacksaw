@@ -84,6 +84,14 @@ pull_split <- function(.data, ...) {
 #' @rdname split-ops
 #' @export
 #' @examples
+#' mtcars %>% group_by_split(cyl, gear, across(c(cyl, gear)))
+group_by_split <- function(.data, ...) {
+  iterate_expressions(.data, "group_by", ...)
+}
+
+#' @rdname split-ops
+#' @export
+#' @examples
 #' mtcars %>% eval_split(select(mpg, hp), filter(mpg>25), mutate(mpg2 = mpg^2))
 eval_split <- function(.data, ...) {
   exprs <- rlang::enquos(...)
