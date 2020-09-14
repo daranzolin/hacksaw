@@ -180,6 +180,43 @@ iris %>%
 #>   ..$ Sepal.Length3: num [1:150] 15.3 14.7 14.1 13.8 15 16.2 13.8 15 13.2 14.7 ...
 ```
 
+### group\_by
+
+``` r
+mtcars %>% 
+  group_by_split(cyl, gear, across(c(cyl, gear))) %>% 
+  map(tally, wt = vs)
+#> [[1]]
+#> # A tibble: 3 x 2
+#>     cyl     n
+#>   <dbl> <dbl>
+#> 1     4    10
+#> 2     6     4
+#> 3     8     0
+#> 
+#> [[2]]
+#> # A tibble: 3 x 2
+#>    gear     n
+#>   <dbl> <dbl>
+#> 1     3     3
+#> 2     4    10
+#> 3     5     1
+#> 
+#> [[3]]
+#> # A tibble: 8 x 3
+#> # Groups:   cyl [3]
+#>     cyl  gear     n
+#>   <dbl> <dbl> <dbl>
+#> 1     4     3     1
+#> 2     4     4     8
+#> 3     4     5     1
+#> 4     6     3     2
+#> 5     6     4     2
+#> 6     6     5     0
+#> 7     8     3     0
+#> 8     8     5     0
+```
+
 ### transmute
 
 ``` r

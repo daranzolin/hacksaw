@@ -106,6 +106,14 @@ iris %>%
   str()
 ```
 
+### group_by
+
+```{r}
+mtcars %>% 
+  group_by_split(cyl, gear, across(c(cyl, gear))) %>% 
+  map(tally, wt = vs)
+```
+
 ### transmute 
 
 ```{r}
