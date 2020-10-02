@@ -15,6 +15,8 @@
 #' df %>% cast_logical(z)
 cast_character <- function(.data, ...) {
   .data <- assert_df(.data)
+  vars <- tidyselect::eval_select(rlang::expr(c(...)), .data)
+  if (rlang::is_empty(vars)) return(dplyr::mutate_all(.data, as.character))
   dplyr::mutate_at(.data, dplyr::vars(...), as.character)
 }
 
@@ -22,6 +24,8 @@ cast_character <- function(.data, ...) {
 #' @export
 cast_numeric <- function(.data, ...) {
   .data <- assert_df(.data)
+  vars <- tidyselect::eval_select(rlang::expr(c(...)), .data)
+  if (rlang::is_empty(vars)) return(dplyr::mutate_all(.data, as.numeric))
   dplyr::mutate_at(.data, dplyr::vars(...), as.numeric)
 }
 
@@ -29,5 +33,7 @@ cast_numeric <- function(.data, ...) {
 #' @export
 cast_logical <- function(.data, ...) {
   .data <- assert_df(.data)
+  vars <- tidyselect::eval_select(rlang::expr(c(...)), .data)
+  if (rlang::is_empty(vars)) return(dplyr::mutate_all(.data, as.logical))
   dplyr::mutate_at(.data, dplyr::vars(...), as.logical)
 }
