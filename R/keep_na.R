@@ -26,6 +26,6 @@ keep_na <- function(.data, ..., .logic = "AND") {
   lf <- switch(.logic,
                "AND" = dplyr::intersect,
                "OR" = c)
-  slice_inds <- purrr::reduce(na_inds, lf)
+  slice_inds <- unique(purrr::reduce(na_inds, lf))
   dplyr::slice(.data, slice_inds)
 }
