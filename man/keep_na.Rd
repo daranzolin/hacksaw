@@ -4,12 +4,14 @@
 \alias{keep_na}
 \title{Keep rows containing missing values}
 \usage{
-keep_na(.data, ...)
+keep_na(.data, ..., .logic = "AND")
 }
 \arguments{
 \item{.data}{A table of data.}
 
 \item{...}{A selection of columns. If empty, all columns are selected.}
+
+\item{.logic}{boolean, either 'AND' or 'OR'. Logic for keeping NAs.}
 }
 \value{
 A data frame.
