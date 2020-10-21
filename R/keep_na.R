@@ -14,6 +14,7 @@
 #' df %>% keep_na(x, any_of(vars))
 #' @export
 keep_na <- function(.data, ..., .logic = "AND") {
+  stopifnot(.logic %in% c("AND", "OR"))
   .data <- assert_df(.data)
   vars <- tidyselect::eval_select(rlang::expr(c(...)), .data)
   if (rlang::is_empty(vars)) {
