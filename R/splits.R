@@ -34,6 +34,14 @@ count_split <- function(.data, ...) {
 #' @rdname split-ops
 #' @export
 #' @examples
+#' mtcars %>% rolling_count_split(gear, carb, gear)
+rolling_count_split <- function(.data, ...) {
+  roll_dots(.data, ..., .f = "count")
+}
+
+#' @rdname split-ops
+#' @export
+#' @examples
 #' mtcars %>% mutate_split(mpg2 = mpg^2, mpg3 = mpg^3)
 mutate_split <- function(.data, ...) {
   q <- rlang::enquos(...)
@@ -87,6 +95,14 @@ pull_split <- function(.data, ...) {
 #' mtcars %>% group_by_split(cyl, gear, across(c(cyl, gear)))
 group_by_split <- function(.data, ...) {
   iterate_expressions(.data, "group_by", ...)
+}
+
+#' @rdname split-ops
+#' @export
+#' @examples
+#' mtcars %>% rolling_group_by_split(cyl, gear, am)
+rolling_group_by_split <- function(.data, ...) {
+  roll_dots(.data, ..., .f = "group_by")
 }
 
 #' @rdname split-ops
@@ -157,4 +173,17 @@ q_list <- function(...) {
   expr_list <- list(exprs)
   expr_list
 }
+
+roll_dots <- function(.data, ..., .f) {
+  dots <- rlang::enquos(...)
+  out <- list()
+  g <- 1
+  f <- utils::getFromNamespace(.f, "dplyr")
+  for (i in seq_along(dots)) {
+    out[[i]] <- f(.data, !!!dots[1:g])
+    g <- g + 1
+  }
+  out
+}
+
 

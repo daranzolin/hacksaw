@@ -4,12 +4,14 @@
 \alias{filter_split}
 \alias{select_split}
 \alias{count_split}
+\alias{rolling_count_split}
 \alias{mutate_split}
 \alias{distinct_split}
 \alias{transmute_split}
 \alias{slice_split}
 \alias{pull_split}
 \alias{group_by_split}
+\alias{rolling_group_by_split}
 \alias{eval_split}
 \alias{precision_split}
 \title{Perform various operations before splitting}
@@ -19,6 +21,8 @@ filter_split(.data, ...)
 select_split(.data, ...)
 
 count_split(.data, ...)
+
+rolling_count_split(.data, ...)
 
 mutate_split(.data, ...)
 
@@ -31,6 +35,8 @@ slice_split(.data, ...)
 pull_split(.data, ...)
 
 group_by_split(.data, ...)
+
+rolling_group_by_split(.data, ...)
 
 eval_split(.data, ...)
 
@@ -54,12 +60,14 @@ library(dplyr)
 mtcars \%>\% filter_split(cyl == 4, cyl == 6)
 iris \%>\% select_split(starts_with("Sepal"), starts_with("Petal"))
 mtcars \%>\% count_split(gear, carb, across(c(cyl, gear)))
+mtcars \%>\% rolling_count_split(gear, carb, gear)
 mtcars \%>\% mutate_split(mpg2 = mpg^2, mpg3 = mpg^3)
 mtcars \%>\% distinct_split(cyl, carb)
 mtcars \%>\% transmute_split(mpg^2, sqrt(mpg))
 mtcars \%>\% slice_split(1:10, 11:20)
 mtcars \%>\% pull_split(mpg, hp)
 mtcars \%>\% group_by_split(cyl, gear, across(c(cyl, gear)))
+mtcars \%>\% rolling_group_by_split(cyl, gear, am)
 mtcars \%>\% eval_split(select(mpg, hp), filter(mpg>25), mutate(mpg2 = mpg^2))
 mtcars \%>\% precision_split(mpg > 25)
 }
