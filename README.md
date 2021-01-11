@@ -111,8 +111,8 @@ mtcars %>%
   count_split(
     cyl,
     carb,
-    across(c(cyl, gear))
-  )
+    gear
+    )
 #> [[1]]
 #>   cyl  n
 #> 1   8 14
@@ -129,15 +129,55 @@ mtcars %>%
 #> 6    8  1
 #> 
 #> [[3]]
-#>   cyl gear  n
-#> 1   8    3 12
-#> 2   4    4  8
-#> 3   6    4  4
-#> 4   4    5  2
-#> 5   6    3  2
-#> 6   8    5  2
-#> 7   4    3  1
-#> 8   6    5  1
+#>   gear  n
+#> 1    3 15
+#> 2    4 12
+#> 3    5  5
+```
+
+### rolling\_count\_split
+
+Rolling counts, left-to-right
+
+``` r
+mtcars %>% 
+  rolling_count_split(
+    cyl,
+    carb,
+    gear
+    )
+#> [[1]]
+#>   cyl  n
+#> 1   4 11
+#> 2   6  7
+#> 3   8 14
+#> 
+#> [[2]]
+#>   cyl carb n
+#> 1   4    1 5
+#> 2   4    2 6
+#> 3   6    1 2
+#> 4   6    4 4
+#> 5   6    6 1
+#> 6   8    2 4
+#> 7   8    3 3
+#> 8   8    4 6
+#> 9   8    8 1
+#> 
+#> [[3]]
+#>    cyl carb gear n
+#> 1    4    1    3 1
+#> 2    4    1    4 4
+#> 3    4    2    4 4
+#> 4    4    2    5 2
+#> 5    6    1    3 2
+#> 6    6    4    4 4
+#> 7    6    6    5 1
+#> 8    8    2    3 4
+#> 9    8    3    3 3
+#> 10   8    4    3 5
+#> 11   8    4    5 1
+#> 12   8    8    5 1
 ```
 
 ### distinct
@@ -182,9 +222,11 @@ iris %>%
 
 ### group\_by
 
+Separate groups:
+
 ``` r
 mtcars %>% 
-  group_by_split(cyl, gear, across(c(cyl, gear))) %>% 
+  group_by_split(cyl, gear, am, across(c(cyl, gear))) %>% 
   map(tally, wt = vs)
 #> [[1]]
 #> # A tibble: 3 x 2
@@ -203,6 +245,13 @@ mtcars %>%
 #> 3     5     1
 #> 
 #> [[3]]
+#> # A tibble: 2 x 2
+#>      am     n
+#>   <dbl> <dbl>
+#> 1     0     7
+#> 2     1     7
+#> 
+#> [[4]]
 #> # A tibble: 8 x 3
 #> # Groups:   cyl [3]
 #>     cyl  gear     n
@@ -215,6 +264,53 @@ mtcars %>%
 #> 6     6     5     0
 #> 7     8     3     0
 #> 8     8     5     0
+```
+
+### rolling\_group\_by\_split
+
+Rolling groups, left-to-right:
+
+``` r
+mtcars %>% 
+  rolling_group_by_split(cyl, gear, am) %>% 
+  map(tally)
+#> [[1]]
+#> # A tibble: 3 x 2
+#>     cyl     n
+#>   <dbl> <int>
+#> 1     4    11
+#> 2     6     7
+#> 3     8    14
+#> 
+#> [[2]]
+#> # A tibble: 8 x 3
+#> # Groups:   cyl [3]
+#>     cyl  gear     n
+#>   <dbl> <dbl> <int>
+#> 1     4     3     1
+#> 2     4     4     8
+#> 3     4     5     2
+#> 4     6     3     2
+#> 5     6     4     4
+#> 6     6     5     1
+#> 7     8     3    12
+#> 8     8     5     2
+#> 
+#> [[3]]
+#> # A tibble: 10 x 4
+#> # Groups:   cyl, gear [8]
+#>      cyl  gear    am     n
+#>    <dbl> <dbl> <dbl> <int>
+#>  1     4     3     0     1
+#>  2     4     4     0     2
+#>  3     4     4     1     6
+#>  4     4     5     1     2
+#>  5     6     3     0     2
+#>  6     6     4     0     2
+#>  7     6     4     1     2
+#>  8     6     5     1     1
+#>  9     8     3     0    12
+#> 10     8     5     1     2
 ```
 
 ### transmute

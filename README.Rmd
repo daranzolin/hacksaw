@@ -81,8 +81,22 @@ mtcars %>%
   count_split(
     cyl,
     carb,
-    across(c(cyl, gear))
-  )
+    gear
+    )
+```
+
+
+### rolling_count_split
+
+Rolling counts, left-to-right
+
+```{r}
+mtcars %>% 
+  rolling_count_split(
+    cyl,
+    carb,
+    gear
+    )
 ```
 
 ### distinct
@@ -108,10 +122,22 @@ iris %>%
 
 ### group_by
 
+Separate groups:
+
 ```{r}
 mtcars %>% 
-  group_by_split(cyl, gear, across(c(cyl, gear))) %>% 
+  group_by_split(cyl, gear, am, across(c(cyl, gear))) %>% 
   map(tally, wt = vs)
+```
+
+### rolling_group_by_split
+
+Rolling groups, left-to-right:
+
+```{r}
+mtcars %>% 
+  rolling_group_by_split(cyl, gear, am) %>% 
+  map(tally)
 ```
 
 ### transmute 
