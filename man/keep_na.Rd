@@ -4,7 +4,7 @@
 \alias{keep_na}
 \title{Keep rows containing missing values}
 \usage{
-keep_na(.data, ..., .logic = "AND")
+keep_na(.data, ..., .logic = c("AND", "OR"))
 }
 \arguments{
 \item{.data}{A table of data.}
