@@ -136,9 +136,30 @@ Rolling groups, left-to-right:
 
 ```{r}
 mtcars %>% 
-  rolling_group_by_split(cyl, gear, am) %>% 
-  map(tally)
+  rolling_group_by_split(
+    cyl, 
+    carb, 
+    gear
+  ) %>% 
+  map(summarize, mean_mpg = mean(mpg))
 ```
+
+### nest_by
+
+```{r}
+mtcars %>%
+    nest_by_split(cyl, gear) %>%
+    map(mutate, model = list(lm(mpg ~ wt, data = data)))
+```
+
+### rolling_nest_by
+
+```{r}
+mtcars %>%
+    rolling_nest_by_split(cyl, gear) %>%
+    map(mutate, model = list(lm(mpg ~ wt, data = data)))
+```
+
 
 ### transmute 
 

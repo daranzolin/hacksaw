@@ -272,45 +272,107 @@ Rolling groups, left-to-right:
 
 ``` r
 mtcars %>% 
-  rolling_group_by_split(cyl, gear, am) %>% 
-  map(tally)
+  rolling_group_by_split(
+    cyl, 
+    carb, 
+    gear
+  ) %>% 
+  map(summarize, mean_mpg = mean(mpg))
 #> [[1]]
 #> # A tibble: 3 x 2
-#>     cyl     n
-#>   <dbl> <int>
-#> 1     4    11
-#> 2     6     7
-#> 3     8    14
+#>     cyl mean_mpg
+#>   <dbl>    <dbl>
+#> 1     4     26.7
+#> 2     6     19.7
+#> 3     8     15.1
 #> 
 #> [[2]]
-#> # A tibble: 8 x 3
+#> # A tibble: 9 x 3
 #> # Groups:   cyl [3]
-#>     cyl  gear     n
-#>   <dbl> <dbl> <int>
-#> 1     4     3     1
-#> 2     4     4     8
-#> 3     4     5     2
-#> 4     6     3     2
-#> 5     6     4     4
-#> 6     6     5     1
-#> 7     8     3    12
-#> 8     8     5     2
+#>     cyl  carb mean_mpg
+#>   <dbl> <dbl>    <dbl>
+#> 1     4     1     27.6
+#> 2     4     2     25.9
+#> 3     6     1     19.8
+#> 4     6     4     19.8
+#> 5     6     6     19.7
+#> 6     8     2     17.2
+#> 7     8     3     16.3
+#> 8     8     4     13.2
+#> 9     8     8     15  
 #> 
 #> [[3]]
-#> # A tibble: 10 x 4
-#> # Groups:   cyl, gear [8]
-#>      cyl  gear    am     n
-#>    <dbl> <dbl> <dbl> <int>
-#>  1     4     3     0     1
-#>  2     4     4     0     2
-#>  3     4     4     1     6
-#>  4     4     5     1     2
-#>  5     6     3     0     2
-#>  6     6     4     0     2
-#>  7     6     4     1     2
-#>  8     6     5     1     1
-#>  9     8     3     0    12
-#> 10     8     5     1     2
+#> # A tibble: 12 x 4
+#> # Groups:   cyl, carb [9]
+#>      cyl  carb  gear mean_mpg
+#>    <dbl> <dbl> <dbl>    <dbl>
+#>  1     4     1     3     21.5
+#>  2     4     1     4     29.1
+#>  3     4     2     4     24.8
+#>  4     4     2     5     28.2
+#>  5     6     1     3     19.8
+#>  6     6     4     4     19.8
+#>  7     6     6     5     19.7
+#>  8     8     2     3     17.2
+#>  9     8     3     3     16.3
+#> 10     8     4     3     12.6
+#> 11     8     4     5     15.8
+#> 12     8     8     5     15
+```
+
+### nest\_by
+
+``` r
+mtcars %>%
+    nest_by_split(cyl, gear) %>%
+    map(mutate, model = list(lm(mpg ~ wt, data = data)))
+#> [[1]]
+#> # A tibble: 3 x 3
+#> # Rowwise:  cyl
+#>     cyl                data model 
+#>   <dbl> <list<tbl_df[,10]>> <list>
+#> 1     4           [11 × 10] <lm>  
+#> 2     6            [7 × 10] <lm>  
+#> 3     8           [14 × 10] <lm>  
+#> 
+#> [[2]]
+#> # A tibble: 3 x 3
+#> # Rowwise:  gear
+#>    gear                data model 
+#>   <dbl> <list<tbl_df[,10]>> <list>
+#> 1     3           [15 × 10] <lm>  
+#> 2     4           [12 × 10] <lm>  
+#> 3     5            [5 × 10] <lm>
+```
+
+### rolling\_nest\_by
+
+``` r
+mtcars %>%
+    rolling_nest_by_split(cyl, gear) %>%
+    map(mutate, model = list(lm(mpg ~ wt, data = data)))
+#> [[1]]
+#> # A tibble: 3 x 3
+#> # Rowwise:  cyl
+#>     cyl                data model 
+#>   <dbl> <list<tbl_df[,10]>> <list>
+#> 1     4           [11 × 10] <lm>  
+#> 2     6            [7 × 10] <lm>  
+#> 3     8           [14 × 10] <lm>  
+#> 
+#> [[2]]
+#> # A tibble: 8 x 4
+#> # Rowwise:  cyl, gear
+#>     cyl  gear               data model 
+#>   <dbl> <dbl> <list<tbl_df[,9]>> <list>
+#> 1     4     3            [1 × 9] <lm>  
+#> 2     4     4            [8 × 9] <lm>  
+#> 3     4     5            [2 × 9] <lm>  
+#> 4     6     3            [2 × 9] <lm>  
+#> 5     6     4            [4 × 9] <lm>  
+#> 6     6     5            [1 × 9] <lm>  
+#> 7     8     3           [12 × 9] <lm>  
+#> 8     8     5            [2 × 9] <lm>
 ```
 
 ### transmute
