@@ -108,6 +108,22 @@ rolling_group_by_split <- function(.data, ...) {
 #' @rdname split-ops
 #' @export
 #' @examples
+#' mtcars %>% nest_by_split(cyl, gear, am)
+nest_by_split <- function(.data, ...) {
+  iterate_expressions(.data, "nest_by", ...)
+}
+
+#' @rdname split-ops
+#' @export
+#' @examples
+#' mtcars %>% rolling_nest_by_split(cyl, gear, am)
+rolling_nest_by_split <- function(.data, ...) {
+  roll_dots(.data, ..., .f = "nest_by")
+}
+
+#' @rdname split-ops
+#' @export
+#' @examples
 #' mtcars %>% eval_split(select(mpg, hp), filter(mpg>25), mutate(mpg2 = mpg^2))
 eval_split <- function(.data, ...) {
   exprs <- rlang::enquos(...)

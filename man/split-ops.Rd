@@ -12,6 +12,8 @@
 \alias{pull_split}
 \alias{group_by_split}
 \alias{rolling_group_by_split}
+\alias{nest_by_split}
+\alias{rolling_nest_by_split}
 \alias{eval_split}
 \alias{precision_split}
 \title{Perform various operations before splitting}
@@ -37,6 +39,10 @@ pull_split(.data, ...)
 group_by_split(.data, ...)
 
 rolling_group_by_split(.data, ...)
+
+nest_by_split(.data, ...)
+
+rolling_nest_by_split(.data, ...)
 
 eval_split(.data, ...)
 
@@ -68,6 +74,8 @@ mtcars \%>\% slice_split(1:10, 11:20)
 mtcars \%>\% pull_split(mpg, hp)
 mtcars \%>\% group_by_split(cyl, gear, across(c(cyl, gear)))
 mtcars \%>\% rolling_group_by_split(cyl, gear, am)
+mtcars \%>\% nest_by_split(cyl, gear, am)
+mtcars \%>\% rolling_nest_by_split(cyl, gear, am)
 mtcars \%>\% eval_split(select(mpg, hp), filter(mpg>25), mutate(mpg2 = mpg^2))
 mtcars \%>\% precision_split(mpg > 25)
 }
