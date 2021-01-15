@@ -4,3 +4,11 @@ assert_df <- function(.data) {
   }
   .data
 }
+
+`%||%` <- function(x, y) {
+  if (is.null(x)) {
+    y
+  } else {
+    x
+  }
+}
