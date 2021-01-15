@@ -577,6 +577,31 @@ df %>% keep_na(x, y)
 #> 2    NA <NA>
 ```
 
+## Coercive joins
+
+I never care if my join keys are incompatible. The `*_join2` suite of
+functions coerce either the left or right table accordingly.
+
+``` r
+df1 <- tibble(x = 1:10, b = 1:10, y = letters[1:10])
+df2 <- tibble(x = as.character(1:10), z = letters[11:20])
+left_join2(df1, df2)
+#> Joining, by = "x"
+#> # A tibble: 10 x 4
+#>    x         b y     z    
+#>    <chr> <int> <chr> <chr>
+#>  1 1         1 a     k    
+#>  2 2         2 b     l    
+#>  3 3         3 c     m    
+#>  4 4         4 d     n    
+#>  5 5         5 e     o    
+#>  6 6         6 f     p    
+#>  7 7         7 g     q    
+#>  8 8         8 h     r    
+#>  9 9         9 i     s    
+#> 10 10       10 j     t
+```
+
 ## Shifting row values
 
 Shift values across rows in either direction. Sometimes useful when
