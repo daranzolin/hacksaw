@@ -579,7 +579,7 @@ df %>% keep_na(x, y)
 
 ## Coercive joins
 
-I never care if my join keys are incompatible. The `*_join2` suite of
+I seldom care if my join keys are incompatible. The `*_join2` suite of
 functions coerce either the left or right table accordingly.
 
 ``` r
