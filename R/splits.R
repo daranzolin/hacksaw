@@ -151,13 +151,17 @@ precision_split <- function(.data, ...) {
 #'
 #' @param var the variable to use.
 #' @param n number of rows to return.
+#' @param value if FALSE, a vector containing the (integer) indices
+#' is returned, and if TRUE, a vector containing the elements
+#' themselves is returned.
 #'
 #' @export
 #' @examples
 #' var_max(1:10)
-var_max <- function(var, n = 6) {
+var_max <- function(var, n = 6, value = FALSE) {
   pf <- parent.frame()
   vals <- utils::tail(sort(var), n)
+  if (value) return(vals)
   eval(expr = which(var %in% vals)[1:n], envir = pf)
 }
 
@@ -165,13 +169,17 @@ var_max <- function(var, n = 6) {
 #'
 #' @param var the variable to use.
 #' @param n number of rows to return.
+#' @param value if FALSE, a vector containing the (integer) indices
+#' is returned, and if TRUE, a vector containing the elements
+#' themselves is returned.
 #'
 #' @export
 #' @examples
 #' var_min(1:10)
-var_min <- function(var, n = 6) {
+var_min <- function(var, n = 6, value = FALSE) {
   pf <- parent.frame()
   vals <- utils::head(sort(var), n)
+  if (value) return(vals)
   eval(expr = which(var %in% vals)[1:n], envir = pf)
 }
 

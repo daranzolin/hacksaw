@@ -4,12 +4,16 @@
 \alias{var_max}
 \title{Return the indices of n max values of a variable}
 \usage{
-var_max(var, n = 6)
+var_max(var, n = 6, value = FALSE)
 }
 \arguments{
 \item{var}{the variable to use.}
 
 \item{n}{number of rows to return.}
+
+\item{value}{if FALSE, a vector containing the (integer) indices
+is returned, and if TRUE, a vector containing the elements
+themselves is returned.}
 }
 \description{
 Return the indices of n max values of a variable
